@@ -9,9 +9,9 @@ datasource db {
 
 model User {
   id          String     @id @default(cuid())
-  name        String
+  name        String     @unique()
   password    String
-  email       String
+  email       String     @unique()
   createdAt   DateTime   @default(now())
   profile     Profile    @relation(fields: [profileId], references: [id])
   profileId   String
@@ -21,6 +21,16 @@ model User {
   followingId String?
   tweets      Tweet[]
   Like        Like[]
+  Session     Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  token     String
+  expiresIn DateTime @default(dbgenerated("NOW() + interval '1 hour'"))
+  createdAt DateTime @default(now())
+  userId    String
 }
 
 enum Theme {
