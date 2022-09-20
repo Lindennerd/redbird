@@ -1,0 +1,18 @@
+{
+  "name": "redbird",
+  "version": "1.0.0",
+  "description": "a twitter clone, only its red",
+  "main": "index.js",
+  "author": "lindennerd",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "packageManager": "yarn@3.2.3",
+  "scripts": {
+    "dev:client": "yarn workspace client run dev",
+    "dev:server": "yarn workspace server run dev"
+  }
+}
