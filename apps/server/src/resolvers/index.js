@@ -6,6 +6,10 @@ const resolvers = {
     hello: hello,
     users: user.getUsers,
   },
+
+  Mutation: {
+    registerUser: user.registerUser,
+  },
 };
 
 export default resolvers;

@@ -8,5 +8,8 @@ const server = new apollo.ApolloServer({
   cors: {
     origin: ["*"],
   },
+  csrfPrevention: true,
+  cache: "bounded",
+  context: ({ req }) => {},
 });
 export default server;
