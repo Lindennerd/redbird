@@ -6,9 +6,15 @@ const typeDefs = gql`
     name: String
   }
 
+  type Session {
+    user: User
+    token: String
+  }
+
   type Query {
     hello: String
     users: [User]
+    login(user: String!, password: String!): Session
   }
 
   type Mutation {
