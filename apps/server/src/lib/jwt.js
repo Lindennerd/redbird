@@ -7,4 +7,9 @@ export default {
   genToken: (data) => {
     return jwt.sign(data, SECRET);
   },
+
+  getUser: (token) => {
+    console.log("token", token);
+    return jwt.verify(token, SECRET);
+  },
 };

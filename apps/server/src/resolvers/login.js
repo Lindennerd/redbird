@@ -3,7 +3,7 @@ import { compare } from "../lib/crypt.js";
 import jwt from "../lib/jwt.js";
 
 export default {
-  login: async (parent, args) => {
+  login: async (parent, args, context) => {
     const login = args;
     const user = await db.prisma.user.findFirst({
       where: {
@@ -16,8 +16,6 @@ export default {
         password: true,
       },
     });
-
-    console.log(user);
 
     if (!user || !compare(login.password, user.password))
       throw "Invalid credentials";

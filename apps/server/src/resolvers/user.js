@@ -2,13 +2,13 @@ import db from "../lib/prisma.js";
 import genHash from "../lib/crypt.js";
 
 export default {
-  getUsers: async () => {
+  getUsers: async (parent, args, context) => {
+    if (!context.user) return null;
     return await db.prisma.user.findMany();
   },
 
   registerUser: async (parent, args) => {
     const user = args;
-    console.log(user);
     if (user.password !== user.passwordConfirmation)
       throw "Passwords dont match";
 
