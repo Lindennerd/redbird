@@ -6,6 +6,9 @@
   "author": "lindennerd",
   "license": "MIT",
   "private": true,
+  "prisma": {
+    "schema": "apps/server/prisma/schema.prisma"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
