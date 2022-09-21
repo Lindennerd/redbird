@@ -1,9 +1,10 @@
-require("dotenv").config();
+require("dotenv").config({
+  path: `../../.env.${process.env.NODE_ENV}`,
+});
 
 const config = {
   JWT_SECRET: process.env.JWT_SECRET,
   DATABASE_URL: process.env.DATABASE_URL,
-  DATABASE_URL_TEST: process.env.DATABASE_URL_TEST,
 };
 
 function exportsConfig() {
