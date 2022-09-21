@@ -8,8 +8,8 @@ export default {
     return jwt.sign(data, SECRET);
   },
 
-  getUser: (token) => {
-    console.log("token", token);
+  validateToken: (token) => {
+    console.log(token);
     return jwt.verify(token, SECRET);
   },
 };

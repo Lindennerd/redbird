@@ -3,7 +3,7 @@ import { compare } from "../lib/crypt.js";
 import jwt from "../lib/jwt.js";
 
 export default {
-  login: async (parent, args, context) => {
+  login: async (parent, args, request) => {
     const login = args;
     const user = await db.prisma.user.findFirst({
       where: {
