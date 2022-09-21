@@ -1,8 +1,8 @@
-import db from "../lib/prisma.js";
-import { compare } from "../lib/crypt.js";
-import jwt from "../lib/jwt.js";
+const db = require("../lib/prisma");
+const { compare } = require("../lib/crypt");
+const jwt = require("../lib/jwt");
 
-export default {
+module.exports = {
   login: async (parent, args, request) => {
     const login = args;
     const user = await db.prisma.user.findFirst({

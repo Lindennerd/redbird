@@ -1,11 +1,11 @@
-import bcrypt from "bcrypt";
+const bcrypt = require("bcrypt");
 
-const genHash = async (data) => {
-  return await bcrypt.hash(data, 10);
+module.exports = {
+  async getHash(data) {
+    return await bcrypt.hash(data, 10);
+  },
+
+  async compare(data, encrypted) {
+    return await bcrypt.compare(data, encrypted);
+  },
 };
-
-export const compare = async (data, encrypted) => {
-  return await bcrypt.compare(data, encrypted);
-};
-
-export default genHash;

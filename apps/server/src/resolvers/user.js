@@ -1,7 +1,7 @@
-import db from "../lib/prisma.js";
-import genHash from "../lib/crypt.js";
+const db = require("../lib/prisma");
+const genHash = require("../lib/crypt");
 
-export default {
+module.exports = {
   getUsers: async (parent, args, context) => {
     if (!context.user) return null;
     return await db.prisma.user.findMany();

@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
 // TODO move to env
 const SECRET = "dev-secret";
 
-export default {
+module.exports = {
   genToken: (data) => {
     return jwt.sign(data, SECRET);
   },

@@ -1,12 +1,12 @@
-import express from "express";
-import morgan from "morgan";
-import cookieParser from "cookie-parser";
-import graphql from "express-graphql";
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import resolvers from "./resolvers/index.js";
-import typeDefs from "./typeDefs/index.js";
-import expressPlayground from "graphql-playground-middleware-express";
-import jwt from "./lib/jwt.js";
+const express = require("express");
+const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+const graphql = require("express-graphql");
+const { makeExecutableSchema } = require("@graphql-tools/schema");
+const resolvers = require("./resolvers");
+const typeDefs = require("./typeDefs");
+const expressPlayground = require("graphql-playground-middleware-express");
+const jwt = require("./lib/jwt");
 
 const app = express();
 app.use(express.json());
@@ -36,4 +36,4 @@ app.use(
 
 app.use("/playground", expressPlayground.default({ endpoint: "/graphql" }));
 
-export default app;
+module.exports = app;

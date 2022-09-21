@@ -10,7 +10,6 @@ const typeDefs = /* GraphQL */ `
   }
 
   type Query {
-    hello: String
     users: [User]
     login(user: String!, password: String!): Session
   }
@@ -25,4 +24,4 @@ const typeDefs = /* GraphQL */ `
   }
 `;
 
-export default typeDefs;
+module.exports = typeDefs;
