@@ -20,6 +20,7 @@ export default {
     if (!user || !compare(login.password, user.password))
       throw "Invalid credentials";
 
+    delete user.password;
     const token = jwt.genToken(user);
 
     return await db.prisma.session.create({

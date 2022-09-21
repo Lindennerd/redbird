@@ -9,7 +9,6 @@ export default {
   },
 
   validateToken: (token) => {
-    console.log(token);
     return jwt.verify(token, SECRET);
   },
 };

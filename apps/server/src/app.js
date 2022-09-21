@@ -18,8 +18,7 @@ app.use((req, res, next) => {
   const token = req.headers.authorization;
   if (token) {
     const payload = jwt.validateToken(token.split("Bearer ")[1]);
-    res.user = payload;
-    console.log(payload);
+    req.user = payload;
   }
 
   next();
