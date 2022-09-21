@@ -1,14 +1,12 @@
 const jwt = require("jsonwebtoken");
-
-// TODO move to env
-const SECRET = "dev-secret";
+const config = require("../config");
 
 module.exports = {
   genToken: (data) => {
-    return jwt.sign(data, SECRET);
+    return jwt.sign(data, config.JWT_SECRET);
   },
 
   validateToken: (token) => {
-    return jwt.verify(token, SECRET);
+    return jwt.verify(token, config.JWT_SECRET);
   },
 };
