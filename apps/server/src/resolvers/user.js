@@ -2,8 +2,8 @@ const db = require("../lib/prisma");
 const genHash = require("../lib/crypt");
 
 module.exports = {
-  getUsers: async (parent, args, context) => {
-    if (!context.user) return null;
+  getUsers: async (parent, args, request) => {
+    if (!request.user) return null;
     return await db.prisma.user.findMany();
   },
 
