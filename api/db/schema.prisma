@@ -1,18 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = "native"
+model User {
+  id          String     @id @default(cuid())
+  name        String     @unique()
+  password    String
+  email       String     @unique()
+  createdAt   DateTime   @default(now())
+  profile     Profile    @relation(fields: [profileId], references: [id])
+  profileId   String
+  followers   Followers? @relation(fields: [followersId], references: [id])
+  followersId String?
+  following   Following? @relation(fields: [followingId], references: [id])
+  followingId String?
+  tweets      Tweet[]
+  Like        Like[]
+  Session     Session[]
 }
 
-// Define your own datamodels here and run `yarn redwood prisma migrate dev`
-// to create migrations for them and apply to your dev DB.
-// TODO: Please remove the following example:
-model UserExample {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Session {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  token     String
+  expiresIn DateTime @default(dbgenerated("NOW() + interval '1 hour'"))
+  createdAt DateTime @default(now())
+  userId    String
+}
+
+enum Theme {
+  DARK
+  LIGHT
+}
+
+model Profile {
+  id          String  @id @default(cuid())
+  image       String?
+  displayName String
+  theme       Theme   @default(LIGHT)
+  bio         String?
+  location    String?
+  website     String?
+  birth       String?
+  User        User[]
+}
+
+model Followers {
+  id        String @id @default(cuid())
+  followers User[]
+}
+
+model Following {
+  id        String @id @default(cuid())
+  following User[]
+}
+
+model Tweet {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  likes     Like[]
+  retweet   Share?
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  tweet     Tweet    @relation(fields: [tweetId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  tweetId   String
+  userId    String
+}
+
+model Share {
+  id      String @id @default(cuid())
+  tweet   Tweet  @relation(fields: [tweetId], references: [id])
+  tweetId String @unique()
 }
