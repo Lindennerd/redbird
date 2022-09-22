@@ -234,9 +234,10 @@ const LoginPage = ({ type }) => {
     }
   }
 
-  if (loading) {
-    return null
-  }
+  // if (loading) {
+  //   console.log('loading')
+  //   return <div>Loading</div>
+  // }
 
   return (
     <>
