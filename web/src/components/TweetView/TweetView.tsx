@@ -1,10 +1,13 @@
+import { useAuth } from "@redwoodjs/auth";
 import TweetForm from "../TweetForm/TweetForm"
 import TweetsCell from "../TweetsCell";
 
 const TweetView = () => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <div>
-      <TweetForm />
+      {isAuthenticated && <TweetForm />}
       <TweetsCell />
     </div>
   )

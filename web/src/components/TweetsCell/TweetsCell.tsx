@@ -1,7 +1,7 @@
 import type { TweetsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import Tweet from '../Tweet/Tweet'
-
+import ReactLoading from 'react-loading';
 
 export const QUERY = gql`
   query TweetsQuery {
@@ -30,9 +30,18 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const beforeQuery = (props) => {
+  return {
+    fetchPolicy: 'cache-and-network',
+    pollInterval: 2500
+  }
+}
 
-export const Empty = () => <div>Empty</div>
+export const Loading = () => (
+  <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
+)
+
+export const Empty = () => <div>Nothing to see here</div>
 
 export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
