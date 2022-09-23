@@ -11,3 +11,9 @@
 /**
  * END --- SETUP TAILWINDCSS EDIT
  */
+
+ @layer components {
+  .btn {
+    @apply border px-6 py-2 rounded-full text-white bg-primary hover:bg-secondary
+  }
+ }
