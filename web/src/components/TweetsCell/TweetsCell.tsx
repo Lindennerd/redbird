@@ -1,5 +1,6 @@
 import type { TweetsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import Tweet from '../Tweet/Tweet'
 
 
 export const QUERY = gql`
@@ -39,10 +40,10 @@ export const Failure = ({ error }: CellFailureProps) => (
 
 export const Success = ({ tweets }: CellSuccessProps<TweetsQuery>) => {
   return (
-    <ul>
+    <div className="flex flex-col gap-2">
       {tweets.map((item) => {
-        return <li key={item.id}>{JSON.stringify(item)}</li>
+        return <Tweet key={item.id} tweet={item} />
       })}
-    </ul>
+    </div>
   )
 }
