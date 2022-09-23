@@ -6,12 +6,14 @@ export const schema = gql`
     user: User!
     userId: String!
     likes: [Like]!
-    retweet: Share
+    retweet: [Share]
+    replies: [Tweet]
+    repliesTo: Tweet
   }
 
   type Query {
-    tweets: [Tweet!]! @requireAuth
-    tweet(id: String!): Tweet @requireAuth
+    tweets: [Tweet!]! @skipAuth
+    tweet(id: String!): Tweet @skipAuth
   }
 
   input CreateTweetInput {
