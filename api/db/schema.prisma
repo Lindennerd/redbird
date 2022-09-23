@@ -8,17 +8,22 @@ datasource db {
 }
 
 model User {
-  id                  String           @id @default(cuid())
-  name                String           @unique()
-  hashedPassword      String
-  email               String           @unique()
-  createdAt           DateTime         @default(now())
-  profile             Profile          @relation(fields: [profileId], references: [id])
-  profileId           String
-  followers           Followers?       @relation(fields: [followersId], references: [id])
-  followersId         String?
-  following           Following?       @relation(fields: [followingId], references: [id])
-  followingId         String?
+  id             String   @id @default(cuid())
+  name           String   @unique()
+  hashedPassword String
+  email          String   @unique()
+  createdAt      DateTime @default(now())
+  profile        Profile  @relation(fields: [profileId], references: [id])
+  profileId      String
+
+  followerId String?
+  follower   User?   @relation("Followers", fields: [followerId], references: [id])
+  followers  User[]  @relation("Followers")
+
+  followingId String?
+  follow      User?   @relation("followings", fields: [followingId], references: [id])
+  following   User[]  @relation("followings")
+
   tweets              Tweet[]
   Like                Like[]
   salt                String
@@ -52,16 +57,6 @@ model Profile {
   website     String?
   birth       String?
   User        User[]
-}
-
-model Followers {
-  id        String @id @default(cuid())
-  followers User[]
-}
-
-model Following {
-  id        String @id @default(cuid())
-  following User[]
 }
 
 model Tweet {
