@@ -32,7 +32,7 @@ export const QUERY = gql`
 
 export const beforeQuery = (props) => {
   return {
-    fetchPolicy: 'cache-and-network'
+    fetchPolicy: 'network-only'
   }
 }
 

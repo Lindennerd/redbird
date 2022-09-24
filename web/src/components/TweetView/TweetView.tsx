@@ -6,7 +6,7 @@ const TweetView = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {isAuthenticated && <TweetForm />}
       <TweetsCell />
     </div>

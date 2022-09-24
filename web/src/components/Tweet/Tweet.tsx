@@ -1,3 +1,6 @@
+import LikeButton from "../LikeButton/LikeButton"
+import ReplyButton from "../ReplyButton/ReplyButton"
+import RetweetButton from "../RetweetButton/RetweetButton"
 
 interface TweetProps {
   id: string,
@@ -20,17 +23,22 @@ const Tweet = ({ tweet }: { tweet: TweetProps }) => {
     return Intl.DateTimeFormat(locale).format(asDate)
   }
 
-  return <div className="w-full rounded-md border p-2">
-    <div>
-      {tweet.text}
+  return (
+    <div className="w-full rounded-md border">
+      <div className="flex justify-between p-2">
+        <span className="text-sm text-gray-500">{tweet.user.name}</span>
+        <span className="text-sm text-gray-500">
+          {dateFormat(tweet.createdAt)}
+        </span>
+      </div>
+      <div className="px-4 py-2">{tweet.text}</div>
+      <div className="flex justify-between p-2 items-center">
+        <ReplyButton />
+        <RetweetButton />
+        <LikeButton />
+      </div>
     </div>
-    <div>
-      {`Tweeted by ${tweet.user.name} at ${dateFormat(tweet.createdAt)}`}
-    </div>
-    <div>
-      Actions
-    </div>
-  </div>
+  )
 }
 
 export default Tweet
