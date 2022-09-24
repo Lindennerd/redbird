@@ -1,67 +1,50 @@
-import { useAuth } from "@redwoodjs/auth"
-import { useMutation } from "@redwoodjs/web";
-import { toast, Toaster } from "@redwoodjs/web/dist/toast";
-import { useState } from "react";
-import { QUERY as TweetsQuery } from "../TweetsCell";
+import { useAuth } from '@redwoodjs/auth'
+import { toast, Toaster } from '@redwoodjs/web/dist/toast'
+import { useState } from 'react'
 
-const CREATE = gql`
-  mutation CreateTweet($input: CreateTweetInput!) {
-    createTweet(input: $input) {
-      createdAt
-      text
-      user {
-        name
-      }
-    }
-  }
-`
+interface TweetInput {
+  text: string
+  userId: string
+}
 
-const TweetForm = () => {
-  const { currentUser } = useAuth();
-  const [tweet, setTweet] = useState('');
+interface TweetFormProps {
+  onPost: (input: TweetInput) => void
+  onLoading: boolean
+}
 
-  const [createTweet, { loading, error }] = useMutation(CREATE, {
-    update: (cache, {data: { createTweet }}) => {
-      const { tweets } : any = cache.readQuery({ query: TweetsQuery });
-      cache.writeQuery({
-        query: TweetsQuery,
-        data: { tweets:  tweets.concat([createTweet]) }
-      })
-    },
-    onCompleted: (data) => {
-      setTweet('');
-    }
-  });
+const TweetForm = ({ onPost, onLoading }: TweetFormProps) => {
+  const { currentUser } = useAuth()
+  const [tweet, setTweet] = useState('')
 
   function onSendTweet() {
-    createTweet({
-      variables: {
-        input: {
-          text: tweet,
-          userId: currentUser.id
-        }
-      }
+    onPost({
+      text: tweet,
+      userId: currentUser.id,
     });
+
+    setTweet('');
+    toast.success('Tweeted!')
   }
 
   return (
-    <div className="border p-2 rounded-md shadow-md">
+    <div className="rounded-md border p-2 shadow-md">
       <Toaster />
       <textarea
-        className="w-full border rounded-md p-2 outline-none focus:shadow-xl"
+        className="w-full rounded-md border p-2 outline-none focus:shadow-xl"
         placeholder="What's going on?"
         name="tweet"
         value={tweet}
-        onChange={e => setTweet(e.target.value)}
+        onChange={(e) => setTweet(e.target.value)}
       />
 
       <div className="flex justify-between">
         <div>Tweet Stuff</div>
         <button
-          disabled={loading}
+          disabled={onLoading}
           className="btn"
-          onClick={e => onSendTweet()}>
-          {loading ? 'Sending...' : 'Send'}
+          onClick={(e) => onSendTweet()}
+        >
+          {onLoading ? 'Sending...' : 'Send'}
         </button>
       </div>
     </div>

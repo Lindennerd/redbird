@@ -50,7 +50,7 @@ export const Success = ({ tweets }: CellSuccessProps<TweetsQuery>) => {
   return (
     <div className="flex flex-col gap-2">
       {tweets.map((item) => {
-        return <Tweet key={item.id} tweet={item} />
+        return <Tweet key={item.id} tweet={item} displayActions={true} />
       })}
     </div>
   )

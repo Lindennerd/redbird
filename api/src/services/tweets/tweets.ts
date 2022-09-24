@@ -7,7 +7,9 @@ import type {
 import { db } from 'src/lib/db'
 
 export const tweets: QueryResolvers['tweets'] = () => {
-  return db.tweet.findMany()
+  return db.tweet.findMany({
+    orderBy: {createdAt: 'desc'}
+  })
 }
 
 export const tweet: QueryResolvers['tweet'] = ({ id }) => {
