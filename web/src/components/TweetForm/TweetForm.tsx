@@ -2,6 +2,7 @@ import { useAuth } from "@redwoodjs/auth"
 import { useMutation } from "@redwoodjs/web";
 import { toast, Toaster } from "@redwoodjs/web/dist/toast";
 import { useState } from "react";
+import { QUERY as TweetsQuery } from "../TweetsCell";
 
 const CREATE = gql`
   mutation CreateTweet($input: CreateTweetInput!) {
@@ -17,8 +18,20 @@ const CREATE = gql`
 
 const TweetForm = () => {
   const { currentUser } = useAuth();
-  const [createTweet, { loading, error }] = useMutation(CREATE);
   const [tweet, setTweet] = useState('');
+
+  const [createTweet, { loading, error }] = useMutation(CREATE, {
+    update: (cache, {data: { createTweet }}) => {
+      const { tweets } : any = cache.readQuery({ query: TweetsQuery });
+      cache.writeQuery({
+        query: TweetsQuery,
+        data: { tweets:  tweets.concat([createTweet]) }
+      })
+    },
+    onCompleted: (data) => {
+      setTweet('');
+    }
+  });
 
   function onSendTweet() {
     createTweet({
@@ -29,9 +42,6 @@ const TweetForm = () => {
         }
       }
     });
-
-    setTweet('');
-    toast.success('Tweet Sent');
   }
 
   return (

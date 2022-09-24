@@ -32,8 +32,7 @@ export const QUERY = gql`
 
 export const beforeQuery = (props) => {
   return {
-    fetchPolicy: 'cache-and-network',
-    pollInterval: 2500
+    fetchPolicy: 'cache-and-network'
   }
 }
 
