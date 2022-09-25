@@ -9,22 +9,16 @@ export const QUERY = gql`
       id
       createdAt
       text
-      likes {
-        user {
-          name
-        }
-      }
-      retweet {
+      repliesTo {
         id
       }
       user {
         name
       }
-      replies {
-        id
-      }
-      repliesTo {
-        id
+      _count {
+        replies
+        likes
+        retweet
       }
     }
   }
@@ -50,7 +44,14 @@ export const Success = ({ tweets }: CellSuccessProps<TweetsQuery>) => {
   return (
     <div className="flex flex-col gap-2">
       {tweets.map((item) => {
-        return <Tweet key={item.id} tweet={item} displayActions={true} />
+        return (
+          <a
+            key={item.id}
+            className="hover:cursor-pointer hover:bg-slate-100"
+          >
+            <Tweet tweet={item} displayActions={true} />
+          </a>
+        )
       })}
     </div>
   )

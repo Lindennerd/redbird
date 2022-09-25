@@ -1,16 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react'
-import Tweet from '../Tweet/Tweet'
-import { ITweet } from '../Tweet/Tweet'
-import TweetForm from '../TweetForm/TweetForm'
 import { Fragment } from 'react'
 
-interface ReplyModalProps {
+interface ModalProps {
   isOpen: boolean
-  toggle: () => void
-  replyingTo: ITweet
+  toggle: () => void,
+  title: string,
+  children: React.ReactNode
 }
 
-const ReplyModal = (props: ReplyModalProps) => {
+const Modal = (props: ModalProps) => {
   return (
     <>
       <Transition appear show={props.isOpen} as={Fragment}>
@@ -47,11 +45,10 @@ const ReplyModal = (props: ReplyModalProps) => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    You are replying to a tweet
+                    {props.title}
                   </Dialog.Title>
                   <div className="mt-2">
-                    <Tweet tweet={props.replyingTo} displayActions={false} />
-                    <TweetForm />
+                    {props.children}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -63,4 +60,4 @@ const ReplyModal = (props: ReplyModalProps) => {
   )
 }
 
-export default ReplyModal
+export default Modal

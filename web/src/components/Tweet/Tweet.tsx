@@ -1,20 +1,25 @@
 import { useState } from 'react'
 import LikeButton from '../LikeButton/LikeButton'
 import ReplyButton from '../ReplyButton/ReplyButton'
-import ReplyModal from '../ReplyModal/ReplyModal'
+import ReplyTweet from '../ReplyTweet/ReplyTweet'
 import RetweetButton from '../RetweetButton/RetweetButton'
+import Modal from '../UI/Modal'
 
 export interface ITweet {
+  __typename?: 'Tweets'
   id: string
   createdAt: string
   text: string
-  likes: {
-    user: {
-      name: string
-    }
-  }[]
-  user: {
+  repliesTo?: {
+    id: string
+  }
+  user?: {
     name: string
+  }
+  _count?: {
+    replies?: number
+    likes?: number
+    retweet?: number
   }
 }
 
@@ -43,17 +48,22 @@ const Tweet = (props: TweetProps) => {
       <div className="px-4 py-2">{props.tweet.text}</div>
       {props.displayActions && (
         <div className="flex items-center justify-between p-2">
-          <ReplyButton onClick={() => setToggleReplyModal(true)} />
+          <div className='flex items-center'>
+            <ReplyButton onClick={() => setToggleReplyModal(true)} />
+            <span>{props.tweet._count.replies}</span>
+          </div>
           <RetweetButton />
           <LikeButton />
         </div>
       )}
 
-      <ReplyModal
+      <Modal
         isOpen={toggleReplyModal}
+        title="You are replying to a tweet"
         toggle={() => setToggleReplyModal(!toggleReplyModal)}
-        replyingTo={props.tweet}
-      />
+      >
+        <ReplyTweet tweet={props.tweet} />
+      </Modal>
     </div>
   )
 }

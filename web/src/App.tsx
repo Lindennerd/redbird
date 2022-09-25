@@ -8,6 +8,7 @@ import Routes from 'src/Routes'
 
 import './scaffold.css'
 import './index.css'
+import { Toaster } from '@redwoodjs/web/dist/toast'
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
