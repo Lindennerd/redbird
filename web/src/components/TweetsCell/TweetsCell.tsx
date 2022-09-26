@@ -1,6 +1,5 @@
 import type { TweetsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
-import { Link, routes } from '@redwoodjs/router'
 import Tweet from '../Tweet/Tweet'
 import ReactLoading from 'react-loading';
 
@@ -32,7 +31,9 @@ export const beforeQuery = (props) => {
 }
 
 export const Loading = () => (
-  <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
+  <div className="flex items-center justify-center">
+    <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
+  </div>
 )
 
 export const Empty = () => <div>Nothing to see here</div>
@@ -46,14 +47,7 @@ export const Success = ({ tweets }: CellSuccessProps<TweetsQuery>) => {
     <div className="flex flex-col gap-2">
       {tweets.map((item) => {
         return (
-          <div
-            key={item.id}
-            className="hover:cursor-pointer hover:bg-slate-100"
-          >
-            <Link to={routes.tweet({id: item.id})}>
-              <Tweet tweet={item} displayActions={true} />
-            </Link>
-          </div>
+          <Tweet tweet={item} key={item.id} displayActions={true} />
         )
       })}
     </div>
