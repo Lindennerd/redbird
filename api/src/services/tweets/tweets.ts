@@ -6,23 +6,28 @@ import type {
 
 import { db } from 'src/lib/db'
 
+const selectTweet = {
+  _count: {
+    select: {
+      likes: true,
+      replies: true,
+      retweet: true,
+    },
+  },
+  id: true,
+  createdAt: true,
+  text: true,
+  user: true,
+  userId: true,
+  repliesTo: true,
+  likes: true,
+  replies: true,
+  retweet: true,
+}
+
 export const tweets: QueryResolvers['tweets'] = async () => {
   const tweets = await db.tweet.findMany({
-    select: {
-      _count: {
-        select: {
-          likes: true,
-          replies: true,
-          retweet: true
-        }
-      },
-      id: true,
-      createdAt: true,
-      text: true,
-      user: true,
-      userId: true,
-      repliesTo: true
-    },
+    select: selectTweet,
     where: { repliesToId: null },
     orderBy: { createdAt: 'desc' },
   });
@@ -32,17 +37,8 @@ export const tweets: QueryResolvers['tweets'] = async () => {
 
 export const tweet: QueryResolvers['tweet'] = ({ id }) => {
   return db.tweet.findUnique({
+    select: selectTweet,
     where: { id },
-    include: {
-      replies: true,
-      _count: {
-        select: {
-          likes: true,
-          replies: true,
-          retweet: true
-        }
-      },
-    }
   })
 }
 

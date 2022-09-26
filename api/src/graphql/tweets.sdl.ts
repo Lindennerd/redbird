@@ -9,15 +9,6 @@ export const schema = gql`
     retweet: [Share]
     replies: [Tweet]
     repliesTo: Tweet
-  }
-
-  type Tweets {
-    id: String!
-    text: String!
-    createdAt: DateTime!
-    user: User
-    userId: String!
-    repliesTo: Tweet
     _count: Interactions
   }
 
@@ -28,7 +19,7 @@ export const schema = gql`
   }
 
   type Query {
-    tweets: [Tweets!]! @skipAuth
+    tweets: [Tweet!]! @skipAuth
     tweet(id: String!): Tweet @skipAuth
   }
 
@@ -50,7 +41,7 @@ export const schema = gql`
 
   type Mutation {
     createTweet(input: CreateTweetInput!): Tweet! @requireAuth
-    reply(input: ReplyTweetInput!): Tweets! @requireAuth
+    reply(input: ReplyTweetInput!): Tweet! @requireAuth
     updateTweet(id: String!, input: UpdateTweetInput!): Tweet! @requireAuth
     deleteTweet(id: String!): Tweet! @requireAuth
   }

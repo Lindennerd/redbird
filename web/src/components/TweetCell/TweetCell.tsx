@@ -22,16 +22,29 @@ export const QUERY = gql`
         user {
           name
         }
+        _count {
+          replies
+          likes
+          retweet
+        }
       }
+      userId
       user {
         name
+      }
+      _count {
+        replies
+        likes
+        retweet
       }
     }
   }
 `
 
 export const Loading = () => (
-  <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
+  <div className="flex items-center justify-center">
+    <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
+  </div>
 )
 
 
@@ -48,9 +61,11 @@ export const Success = ({
 }: CellSuccessProps<FindTweetQuery, FindTweetQueryVariables>) => {
   return (
     <div>
-      <Tweet tweet={tweet} />
+      <Tweet tweet={tweet} displayActions={true} />
       <div>
-
+        {tweet.replies.map(reply => (
+          <Tweet tweet={reply} displayActions={true} />
+        ))}
       </div>
     </div>
   )

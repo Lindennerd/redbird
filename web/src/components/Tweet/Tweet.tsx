@@ -5,28 +5,11 @@ import ReplyButton from '../ReplyButton/ReplyButton'
 import ReplyTweet from '../ReplyTweet/ReplyTweet'
 import RetweetButton from '../RetweetButton/RetweetButton'
 import Modal from '../UI/Modal'
-
-export interface ITweet {
-  __typename?: 'Tweets'
-  id: string
-  createdAt: string
-  text: string
-  repliesTo?: {
-    id: string
-  }
-  user?: {
-    name: string
-  }
-  _count?: {
-    replies?: number
-    likes?: number
-    retweet?: number
-  }
-}
+import { Tweet as TweetType } from 'types/graphql'
 
 interface TweetProps {
   displayActions: boolean
-  tweet: ITweet
+  tweet: TweetType
 }
 
 const Tweet = (props: TweetProps) => {
@@ -39,21 +22,21 @@ const Tweet = (props: TweetProps) => {
   }
 
   return (
-    <div className="w-full rounded-md border">
-      <div className="flex justify-between p-2 hover:cursor-pointer hover:bg-slate-100">
-        <Link to={routes.tweet({ id: props.tweet.id })}>
+    <div className="w-full rounded-md border hover:cursor-pointer hover:bg-slate-100">
+      <Link to={routes.tweet({ id: props.tweet.id })}>
+        <div className="flex justify-between p-2">
           <span className="text-sm text-gray-500">{props.tweet.user.name}</span>
           <span className="text-sm text-gray-500">
             {dateFormat(props.tweet.createdAt)}
           </span>
-          <div className="px-4 py-2">{props.tweet.text}</div>
-        </Link>
-      </div>
+        </div>
+        <div className="px-4 py-2">{props.tweet.text}</div>
+      </Link>
       {props.displayActions && (
         <div className="flex items-center justify-between p-2">
           <div className="flex items-center">
             <ReplyButton onClick={() => setToggleReplyModal(true)} />
-            <span>{props.tweet._count.replies}</span>
+            <span>{props.tweet._count?.replies}</span>
           </div>
           <RetweetButton />
           <LikeButton />
