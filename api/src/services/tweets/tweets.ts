@@ -33,6 +33,16 @@ export const tweets: QueryResolvers['tweets'] = async () => {
 export const tweet: QueryResolvers['tweet'] = ({ id }) => {
   return db.tweet.findUnique({
     where: { id },
+    include: {
+      replies: true,
+      _count: {
+        select: {
+          likes: true,
+          replies: true,
+          retweet: true
+        }
+      },
+    }
   })
 }
 

@@ -31,10 +31,10 @@ interface TweetProps {
 const Tweet = (props: TweetProps) => {
   const [toggleReplyModal, setToggleReplyModal] = useState(false);
 
-  function dateFormat(date: string) {
-    const locale = Intl.DateTimeFormat().resolvedOptions().locale
-    const asDate = new Date(date)
-    return Intl.DateTimeFormat(locale).format(asDate)
+  function dateFormat(datetime: string) {
+  const parsedDate = new Date(datetime)
+  const month = parsedDate.toLocaleString('default', { month: 'long' })
+  return `${parsedDate.getDate()} ${month} ${parsedDate.getFullYear()}`
   }
 
   return (
