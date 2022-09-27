@@ -16,11 +16,6 @@ const REPLY = gql`
       repliesTo {
         id
       }
-      _count {
-        replies
-        retweet
-        likes
-      }
       text
       user {
         name

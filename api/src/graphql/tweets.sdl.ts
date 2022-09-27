@@ -6,17 +6,12 @@ export const schema = gql`
     user: User!
     userId: String!
     likes: [Like]!
-    retweet: [Share]
+    retweets: [Tweet]
+    retweet: Tweet
     replies: [Tweet]
     repliesTo: Tweet
-    _count: Interactions
   }
 
-  type Interactions {
-    likes: Int
-    replies: Int
-    retweet: Int
-  }
 
   type Query {
     tweets: [Tweet!]! @skipAuth

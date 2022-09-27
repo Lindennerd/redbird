@@ -9,6 +9,7 @@ export const QUERY = gql`
       id
       createdAt
       text
+      userId
       repliesTo {
         id
       }
@@ -20,6 +21,12 @@ export const QUERY = gql`
         userId
       }
       replies {
+        id
+      }
+      retweets {
+        id
+      }
+      retweet {
         id
       }
     }
