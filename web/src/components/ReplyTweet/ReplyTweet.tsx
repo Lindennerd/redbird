@@ -3,7 +3,9 @@ import { toast, Toaster } from '@redwoodjs/web/dist/toast'
 import Tweet from '../Tweet/Tweet'
 import TweetForm from '../TweetForm/TweetForm'
 import { QUERY as TweetsQuery } from '../TweetsCell'
+import { QUERY as TweetThreadQuery } from '../TweetCell'
 import { Tweet as TweetType } from 'types/graphql'
+
 
 
 const REPLY = gql`
@@ -33,30 +35,18 @@ interface ReplyTweetProps {
 
 const ReplyTweet = ({ tweet }: ReplyTweetProps) => {
   const [replyTweet, { loading }] = useMutation(REPLY, {
+    refetchQueries: [
+      { query: TweetsQuery },
+      {
+        query: TweetThreadQuery,
+        variables: {
+          id: tweet.id,
+        },
+      },
+    ],
     onError: (error) => {
       console.error(error)
       toast.error(error.message)
-    },
-    update: (cache, { data }) => {
-      const {reply} = data;
-
-      const { tweets }: any = cache.readQuery({ query: TweetsQuery })
-      cache.writeQuery({
-        query: TweetsQuery,
-        data: {
-          tweets: tweets.map((t) => {
-            if (t.id === reply.repliesTo.id) {
-              return {
-                ...t, _count: {
-                  replies: t._count.replies + 1,
-                  retweet: t._count.retweet,
-                  likes: t._count.likes
-                }
-              }
-            } else return t;
-          }),
-        },
-      })
     },
   })
 
