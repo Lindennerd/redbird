@@ -19,10 +19,8 @@ export const QUERY = gql`
         id
         userId
       }
-      _count {
-        replies
-        likes
-        retweet
+      replies {
+        id
       }
     }
   }

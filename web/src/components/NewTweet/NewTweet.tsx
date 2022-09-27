@@ -37,7 +37,6 @@ const NewTweet = () => {
 
   return (
     <>
-      <Toaster />
       <TweetForm onPost={onPost} onLoading={loading} />
     </>
   )

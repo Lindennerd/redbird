@@ -16,27 +16,25 @@ export const QUERY = gql`
       retweet {
         id
       }
-      replies {
-        id
-        text
-        createdAt
-        user {
-          name
-        }
-        _count {
-          replies
-          likes
-          retweet
-        }
-      }
       userId
       user {
         name
       }
-      _count {
-        replies
-        likes
-        retweet
+      replies {
+        id
+        text
+        createdAt
+        userId
+        user {
+          name
+        }
+        likes {
+          id
+          userId
+        }
+        replies {
+          id
+        }
       }
     }
   }

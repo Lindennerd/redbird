@@ -7,13 +7,6 @@ import type {
 import { db } from 'src/lib/db'
 
 const selectTweet = {
-  _count: {
-    select: {
-      likes: true,
-      replies: true,
-      retweet: true,
-    },
-  },
   id: true,
   createdAt: true,
   text: true,
@@ -37,7 +30,21 @@ export const tweets: QueryResolvers['tweets'] = async () => {
 
 export const tweet: QueryResolvers['tweet'] = ({ id }) => {
   return db.tweet.findUnique({
-    select: selectTweet,
+    select: {
+      id: true,
+      createdAt: true,
+      text: true,
+      user: true,
+      userId: true,
+      repliesTo: true,
+      likes: true,
+      retweet: true,
+      replies: {
+        include: {
+          replies: true
+        }
+      },
+    },
     where: { id },
   })
 }
