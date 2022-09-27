@@ -2,6 +2,7 @@ import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
 import { QUERY as TweetsQuery } from '../TweetsCell'
+import { QUERY as TweetThreadQuery } from '../TweetCell'
 import { Tweet as TweetType } from 'types/graphql'
 
 const MUTATION_LIKE = gql`
@@ -20,41 +21,15 @@ const MUTATION_LIKE = gql`
 const LikeButton = ({ tweet }: { tweet: TweetType }) => {
   const { currentUser } = useAuth()
   const [createLike, { loading, error }] = useMutation(MUTATION_LIKE, {
-    update: (cache, { data: { createLike } }) => {
-      const { tweets }: { tweets: TweetType[] } = cache.readQuery({
-        query: TweetsQuery,
-      })
-      cache.writeQuery({
-        query: TweetsQuery,
-        data: {
-          tweets: tweets.map((tweet) => {
-            if (createLike.operation === 'DELETE') {
-              return {
-                ...tweet,
-                likes: {
-                  ...tweet.likes.find((like) => like.id !== createLike.like.id),
-                },
-                _count: {
-                  ...tweet._count,
-                  likes: tweet._count.likes - 1,
-                },
-              }
-            } else {
-              return {
-                ...tweet,
-                likes: {
-                  ...[...tweet.likes, createLike.like],
-                },
-                _count: {
-                  ...tweet._count,
-                  likes: tweet._count.likes + 1,
-                },
-              }
-            }
-          }),
+    refetchQueries: [
+      { query: TweetsQuery },
+      {
+        query: TweetThreadQuery,
+        variables: {
+          id: tweet.id,
         },
-      })
-    },
+      },
+    ],
   })
 
   function onLikeClick() {

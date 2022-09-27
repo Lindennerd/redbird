@@ -11,6 +11,7 @@ export const QUERY = gql`
       createdAt
       likes {
         id
+        userId
       }
       retweet {
         id
@@ -64,7 +65,7 @@ export const Success = ({
       <Tweet tweet={tweet} displayActions={true} />
       <div className="ml-4">
         {tweet.replies.map(reply => (
-          <Tweet tweet={reply} displayActions={true} />
+          <Tweet tweet={reply} key={reply.id} displayActions={true} />
         ))}
       </div>
     </div>

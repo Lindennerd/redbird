@@ -16,6 +16,7 @@ export const QUERY = gql`
         name
       }
       likes {
+        id
         userId
       }
       _count {
