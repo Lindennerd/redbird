@@ -21,15 +21,21 @@ const MUTATION_LIKE = gql`
 const LikeButton = ({ tweet }: { tweet: TweetType }) => {
   const { currentUser } = useAuth()
   const [createLike, { loading, error }] = useMutation(MUTATION_LIKE, {
-    refetchQueries: [
-      { query: TweetsQuery },
-      {
-        query: TweetThreadQuery,
-        variables: {
-          id: tweet.id,
-        },
-      },
-    ],
+    update: (cache, { data: {createLike} }) => {
+      cache.modify({
+        optimistic: true,
+        id: cache.identify(tweet),
+        fields: {
+          likes: (currLikesRef, {readField}) => {
+            if (createLike.operation === 'DELETE') {
+              return currLikesRef.filter(like => readField('id', like) !== createLike.like.id);
+            } else {
+              return [...currLikesRef, createLike.like]
+            }
+          }
+        }
+      })
+    }
   })
 
   function onLikeClick() {
