@@ -8,6 +8,16 @@ export const schema = gql`
     userId: String!
   }
 
+  enum OPERATION {
+    DELETE
+    CREATE
+  }
+
+  type LikeOutput {
+    like: Like!
+    operation: OPERATION!
+  }
+
   type Query {
     likes: [Like!]! @requireAuth
     like(id: String!): Like @requireAuth
@@ -24,7 +34,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createLike(input: CreateLikeInput!): Like! @requireAuth
+    createLike(input: CreateLikeInput!): LikeOutput! @requireAuth
     updateLike(id: String!, input: UpdateLikeInput!): Like! @requireAuth
     deleteLike(id: String!): Like! @requireAuth
   }

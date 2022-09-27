@@ -36,10 +36,17 @@ const Tweet = (props: TweetProps) => {
         <div className="flex items-center justify-between p-2">
           <div className="flex items-center">
             <ReplyButton onClick={() => setToggleReplyModal(true)} />
-            <span>{props.tweet._count?.replies}</span>
+            <span>{props.tweet._count?.replies ?? 0}</span>
           </div>
-          <RetweetButton />
-          <LikeButton />
+          <div className="flex items-center">
+            <RetweetButton />
+            {props.tweet._count?.retweet ?? 0}
+          </div>
+
+          <div className="flex items-center">
+            <LikeButton tweet={props.tweet} />
+            {props.tweet._count?.likes ?? 0}
+          </div>
         </div>
       )}
 

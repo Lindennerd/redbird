@@ -16,10 +16,31 @@ export const like: QueryResolvers['like'] = ({ id }) => {
   })
 }
 
-export const createLike: MutationResolvers['createLike'] = ({ input }) => {
-  return db.like.create({
-    data: input,
-  })
+export const createLike: MutationResolvers['createLike'] = async ({ input }) => {
+  const userLiked = await db.like.findFirst({
+    where: {
+      AND: [
+        { tweetId: input.tweetId },
+        { userId: input.userId }
+      ]
+    }
+  });
+
+  if (userLiked) {
+    const like = db.like.delete({
+      where: {
+        id: userLiked.id
+      },
+    })
+    return {like, operation: 'DELETE' }
+  } else {
+    const like = db.like.create({
+      data: input,
+    })
+
+    return {like, operation: 'CREATE'}
+  }
+
 }
 
 export const updateLike: MutationResolvers['updateLike'] = ({ id, input }) => {

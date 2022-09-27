@@ -62,7 +62,7 @@ export const Success = ({
   return (
     <div>
       <Tweet tweet={tweet} displayActions={true} />
-      <div>
+      <div className="ml-4">
         {tweet.replies.map(reply => (
           <Tweet tweet={reply} displayActions={true} />
         ))}

@@ -1,8 +1,10 @@
 import { useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/dist/toast'
-import Tweet, { ITweet } from '../Tweet/Tweet'
+import Tweet from '../Tweet/Tweet'
 import TweetForm from '../TweetForm/TweetForm'
 import { QUERY as TweetsQuery } from '../TweetsCell'
+import { Tweet as TweetType } from 'types/graphql'
+
 
 const REPLY = gql`
   mutation ReplyTweet($input: ReplyTweetInput!) {
@@ -26,7 +28,7 @@ const REPLY = gql`
 `
 
 interface ReplyTweetProps {
-  tweet: ITweet
+  tweet: TweetType
 }
 
 const ReplyTweet = ({ tweet }: ReplyTweetProps) => {
@@ -39,8 +41,6 @@ const ReplyTweet = ({ tweet }: ReplyTweetProps) => {
       const {reply} = data;
 
       const { tweets }: any = cache.readQuery({ query: TweetsQuery })
-      console.log(tweets)
-      console.log(reply)
       cache.writeQuery({
         query: TweetsQuery,
         data: {
