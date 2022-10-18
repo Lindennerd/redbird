@@ -80,6 +80,26 @@ export const reply: MutationResolvers['reply'] = ({ input }) => {
   })
 }
 
+export const retweet: MutationResolvers['retweet'] = ({input}) => {
+  return db.tweet.create({
+    data: {
+      text: '',
+      userId: context.currentUser.id,
+      retweetId: input.retweetId
+    }
+  })
+}
+
+export const retweetWithComment: MutationResolvers['retweetWithComment'] = ({input}) => {
+  return db.tweet.create({
+    data: {
+      text: input.text,
+      userId: context.currentUser.id,
+      retweetId: input.retweetId
+    }
+  })
+}
+
 export const updateTweet: MutationResolvers['updateTweet'] = ({
   id,
   input,

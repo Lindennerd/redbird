@@ -1,8 +1,11 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { FaRetweet } from 'react-icons/fa'
+import { FaRetweet, FaPencilAlt } from 'react-icons/fa'
+import { Tweet } from 'types/graphql'
+import { Retweet } from './Retweet'
+import { RetweetWithComment } from './RetweetWithComment'
 
-const RetweetButton = () => {
+const RetweetButton = ({ tweet }: { tweet: Tweet }) => {
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
@@ -23,10 +26,12 @@ const RetweetButton = () => {
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <Menu.Item>
-              <button>Retweet</button>
+              <>
+                <Retweet tweet={tweet} />
+              </>
             </Menu.Item>
             <Menu.Item>
-              <button>Retweet with a comment</button>
+              <><RetweetWithComment tweet={tweet} /></>
             </Menu.Item>
           </Menu.Items>
         </Transition>

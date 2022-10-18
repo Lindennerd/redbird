@@ -30,6 +30,10 @@ export const QUERY = gql`
       }
       retweet {
         id
+        text
+        user {
+          name
+        }
       }
     }
   }

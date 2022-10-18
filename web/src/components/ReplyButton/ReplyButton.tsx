@@ -15,7 +15,6 @@ const ReplyButton = ({ onClick }: { onClick: () => void }) => {
 
   return (
     <>
-      <Toaster />
       <button
         onClick={(e) => reply()}
         className="rounded-full  p-2 transition-all

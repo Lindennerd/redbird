@@ -34,9 +34,21 @@ export const schema = gql`
     userId: String
   }
 
+  input RetweetInput {
+    retweetId: String!
+  }
+
+  input RetweetWithCommentInput {
+    retweetId: String!
+    text: String!
+  }
+
+
   type Mutation {
     createTweet(input: CreateTweetInput!): Tweet! @requireAuth
     reply(input: ReplyTweetInput!): Tweet! @requireAuth
+    retweet(input: RetweetInput!): Tweet! @requireAuth
+    retweetWithComment(input: RetweetWithCommentInput!): Tweet! @requireAuth
     updateTweet(id: String!, input: UpdateTweetInput!): Tweet! @requireAuth
     deleteTweet(id: String!): Tweet! @requireAuth
   }

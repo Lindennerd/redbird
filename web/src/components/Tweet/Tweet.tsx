@@ -25,12 +25,22 @@ const Tweet = (props: TweetProps) => {
     <div className="w-full rounded-md border hover:cursor-pointer hover:bg-slate-100">
       <Link to={routes.tweet({ id: props.tweet.id })}>
         <div className="flex justify-between p-2">
-          <span className="text-sm text-gray-500">{props.tweet.user.name}</span>
+        <span className="text-sm text-gray-500">
+              {props.tweet.user.name}
+            </span>
+          {props.tweet.retweet && (
+            <div>
+              <span className="text-sm text-gray-500">
+                Retweets from {props.tweet.retweet.user.name}
+              </span>
+            </div>
+          )}
           <span className="text-sm text-gray-500">
             {dateFormat(props.tweet.createdAt)}
           </span>
         </div>
         <div className="px-4 py-2">{props.tweet.text}</div>
+        {props.tweet.retweet && (<div className="px-4 py-2">{ props.tweet.retweet.text}</div>)}
       </Link>
       {props.displayActions && (
         <div className="flex items-center justify-between p-2">
@@ -39,8 +49,8 @@ const Tweet = (props: TweetProps) => {
             <span>{props.tweet.replies?.length ?? 0}</span>
           </div>
           <div className="flex items-center">
-            <RetweetButton />
-            {props.tweet.retweet?.length ?? 0}
+            <RetweetButton tweet={props.tweet} />
+            {props.tweet.retweets?.length ?? 0}
           </div>
 
           <div className="flex items-center">
