@@ -67,7 +67,7 @@ export const reply: MutationResolvers['reply'] = ({ input }) => {
         select: {
           likes: true,
           replies: true,
-          retweet: true,
+          retweets: true,
         },
       },
       id: true,

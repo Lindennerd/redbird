@@ -23,12 +23,10 @@ const TweetForm = ({ onPost, onLoading }: TweetFormProps) => {
     });
 
     setTweet('');
-    toast.success('Tweeted!')
   }
 
   return (
     <div className="rounded-md border p-2 shadow-md">
-      <Toaster />
       <textarea
         className="w-full rounded-md border p-2 outline-none focus:shadow-xl"
         placeholder="What's going on?"

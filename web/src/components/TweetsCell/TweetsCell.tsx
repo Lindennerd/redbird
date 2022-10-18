@@ -1,7 +1,9 @@
-import type { TweetsQuery } from 'types/graphql'
+import type { Tweet as TweetType, TweetsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import Tweet from '../Tweet/Tweet'
-import ReactLoading from 'react-loading';
+import ReactLoading from 'react-loading'
+import { atom, useAtom } from 'jotai'
+import { useEffect } from 'react'
 
 export const QUERY = gql`
   query TweetsQuery {
@@ -35,7 +37,7 @@ export const QUERY = gql`
 
 export const beforeQuery = (props) => {
   return {
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only',
   }
 }
 
@@ -52,12 +54,11 @@ export const Failure = ({ error }: CellFailureProps) => (
 )
 
 export const Success = ({ tweets }: CellSuccessProps<TweetsQuery>) => {
+
   return (
     <div className="flex flex-col gap-2">
       {tweets.map((item) => {
-        return (
-          <Tweet tweet={item} key={item.id} displayActions={true} />
-        )
+        return <Tweet tweet={item} key={item.id} displayActions={true} />
       })}
     </div>
   )

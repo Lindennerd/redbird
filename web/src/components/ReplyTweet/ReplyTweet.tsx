@@ -43,6 +43,9 @@ const ReplyTweet = ({ tweet }: ReplyTweetProps) => {
       console.error(error)
       toast.error(error.message)
     },
+    onCompleted() {
+      toast.success("Reply Sent")
+    }
   })
 
   function onPost(reply) {
