@@ -5,11 +5,11 @@ import ReplyButton from '../ReplyButton/ReplyButton'
 import ReplyTweet from '../ReplyTweet/ReplyTweet'
 import RetweetButton from '../RetweetButton/RetweetButton'
 import Modal from '../UI/Modal'
-import { Tweet as TweetType } from 'types/graphql'
+import { Tweets } from 'types/graphql'
 
 interface TweetProps {
   displayActions: boolean
-  tweet: TweetType
+  tweet: Tweets
 }
 
 const Tweet = (props: TweetProps) => {
@@ -46,16 +46,16 @@ const Tweet = (props: TweetProps) => {
         <div className="flex items-center justify-between p-2">
           <div className="flex items-center">
             <ReplyButton onClick={() => setToggleReplyModal(true)} />
-            <span>{props.tweet.replies?.length ?? 0}</span>
+            <span>{props.tweet.replies}</span>
           </div>
           <div className="flex items-center">
             <RetweetButton tweet={props.tweet} />
-            {props.tweet.retweets?.length ?? 0}
+            {props.tweet.retweets}
           </div>
 
           <div className="flex items-center">
             <LikeButton tweet={props.tweet} />
-            {props.tweet.likes.length}
+            {props.tweet.likes}
           </div>
         </div>
       )}

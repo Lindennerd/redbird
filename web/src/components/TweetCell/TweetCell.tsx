@@ -43,6 +43,9 @@ export const QUERY = gql`
           id
         }
       }
+      retweets {
+        __typename
+      }
     }
   }
 `

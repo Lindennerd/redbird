@@ -21,7 +21,7 @@ export const createLike: MutationResolvers['createLike'] = async ({ input }) => 
     where: {
       AND: [
         { tweetId: input.tweetId },
-        { userId: input.userId }
+        { userId: context.currentUser.id }
       ]
     }
   });
@@ -35,7 +35,10 @@ export const createLike: MutationResolvers['createLike'] = async ({ input }) => 
     return {like, operation: 'DELETE' }
   } else {
     const like = db.like.create({
-      data: input,
+      data: {
+        tweetId: input.tweetId,
+        userId: context.currentUser.id
+      },
     })
 
     return {like, operation: 'CREATE'}

@@ -6,46 +6,48 @@ import type {
 
 import { db } from 'src/lib/db'
 
-const selectTweet = {
-  id: true,
-  createdAt: true,
-  text: true,
-  user: true,
-  userId: true,
-  repliesTo: true,
-  likes: true,
-  replies: true,
-  retweet: true,
-}
-
 export const tweets: QueryResolvers['tweets'] = async () => {
   const tweets = await db.tweet.findMany({
-    select: selectTweet,
+    include: {
+      user: true,
+      likes: true,
+      repliesTo: true,
+      retweet: true,
+      _count: {
+        select: {
+          likes: true,
+          replies: true,
+          retweets: true,
+        },
+      },
+    },
     where: { repliesToId: null },
     orderBy: { createdAt: 'desc' },
-  });
+  })
 
-  return tweets;
+  return tweets.map((tweet) => ({
+    id: tweet.id,
+    text: tweet.text,
+    createdAt: tweet.createdAt,
+    user: tweet.user,
+    replyTo: tweet.repliesTo,
+    retweet: tweet.retweet,
+    likes: tweet._count.likes,
+    retweets: tweet._count.retweets,
+    replies: tweet._count.replies,
+    currentUserLiked:
+      context.currentUser &&
+      tweet.likes.some((like) => like.userId === context.currentUser.id),
+  }))
 }
 
 export const tweet: QueryResolvers['tweet'] = ({ id }) => {
   return db.tweet.findUnique({
-    select: {
-      id: true,
-      createdAt: true,
-      text: true,
-      user: true,
-      userId: true,
-      repliesTo: true,
-      likes: true,
-      retweet: true,
-      replies: {
-        include: {
-          replies: true
-        }
-      },
-    },
     where: { id },
+    include: {
+      replies: true,
+      retweets: true,
+    },
   })
 }
 
@@ -62,41 +64,32 @@ export const reply: MutationResolvers['reply'] = ({ input }) => {
       userId: input.userId,
       repliesToId: input.repliesTo,
     },
-    select: {
-      _count: {
-        select: {
-          likes: true,
-          replies: true,
-          retweets: true,
-        },
-      },
-      id: true,
-      createdAt: true,
-      text: true,
-      user: true,
-      userId: true,
-      repliesTo: true,
+    include: {
+      replies: true,
+      retweets: true,
     },
   })
 }
 
-export const retweet: MutationResolvers['retweet'] = ({input}) => {
+export const retweet: MutationResolvers['retweet'] = ({ input }) => {
   return db.tweet.create({
     data: {
       text: '',
       userId: context.currentUser.id,
-      retweetId: input.retweetId
-    }
+      retweetId: input.retweetId,
+    },
   })
 }
 
-export const retweetWithComment: MutationResolvers['retweetWithComment'] = ({input}) => {
+export const retweetWithComment: MutationResolvers['retweetWithComment'] = ({
+  input,
+}) => {
   return db.tweet.create({
     data: {
       text: input.text,
       userId: context.currentUser.id,
-      retweetId: input.retweetId
-    }
+      retweetId: input.retweetId,
+    },
   })
 }
 

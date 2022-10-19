@@ -25,12 +25,10 @@ export const schema = gql`
 
   input CreateLikeInput {
     tweetId: String!
-    userId: String!
   }
 
   input UpdateLikeInput {
     tweetId: String
-    userId: String
   }
 
   type Mutation {

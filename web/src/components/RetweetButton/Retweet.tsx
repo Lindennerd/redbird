@@ -2,7 +2,7 @@ import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { FaRetweet } from 'react-icons/fa'
-import { Tweet } from 'types/graphql'
+import { Tweets } from 'types/graphql'
 import { QUERY as TweetsQuery } from '../TweetsCell'
 
 export const RETWEET_MUTATION = gql`
@@ -34,7 +34,7 @@ export const RETWEET_MUTATION = gql`
   }
 `
 
-export function Retweet({ tweet }: { tweet: Tweet }) {
+export function Retweet({ tweet }: { tweet: Tweets }) {
   const { isAuthenticated } = useAuth()
 
   const [retweet, { loading, error }] = useMutation(RETWEET_MUTATION, {
@@ -46,7 +46,7 @@ export function Retweet({ tweet }: { tweet: Tweet }) {
       toast.success('Retweet sent!')
     },
     update: (cache, { data: { retweet } }) => {
-      const { tweets }: { tweets: Tweet[] } = cache.readQuery({
+      const { tweets }: { tweets: Tweets[] } = cache.readQuery({
         query: TweetsQuery,
       })
       cache.writeQuery({

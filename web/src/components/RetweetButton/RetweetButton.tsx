@@ -1,11 +1,11 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { FaRetweet, FaPencilAlt } from 'react-icons/fa'
-import { Tweet } from 'types/graphql'
+import { Tweets } from 'types/graphql'
 import { Retweet } from './Retweet'
 import { RetweetWithComment } from './RetweetWithComment'
 
-const RetweetButton = ({ tweet }: { tweet: Tweet }) => {
+const RetweetButton = ({ tweet }: { tweet: Tweets }) => {
   return (
     <div>
       <Menu as="div" className="relative inline-block text-left">
