@@ -25,15 +25,17 @@ const LikeButton = ({ tweet }: { tweet: Tweets }) => {
         optimistic: true,
         id: cache.identify(tweet),
         fields: {
-          likes: (currLikesRef, { readField }) => {
+          likesCount: (currLikesRef, { readField }) => {
+            console.log(currLikesRef)
             if (createLike.operation === 'DELETE') {
-              return currLikesRef.filter(
-                (like) => readField('id', like) !== createLike.like.id
-              )
+              return currLikesRef -1
             } else {
-              return [...currLikesRef, createLike.like]
+              return currLikesRef +1
             }
           },
+          currentUserLiked: () => {
+            return createLike.operation !== 'DELETE'
+          }
         },
       })
     },

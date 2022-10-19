@@ -8,41 +8,14 @@ import Tweet from '../Tweet/Tweet'
 import TweetForm from '../TweetForm/TweetForm'
 import { QUERY as TweetsQuery } from '../TweetsCell'
 import Modal from '../UI/Modal'
+import { TweetsFragment } from 'src/graphql/TweetsFragment'
+
 
 export const RETWEET_WITHCOMMENT_MUTATION = gql`
+  ${TweetsFragment}
   mutation RetweetWithComment($input: RetweetWithCommentInput!) {
     retweetWithComment(input: $input) {
-      id
-      createdAt
-      text
-      userId
-      user {
-        name
-      }
-      repliesTo {
-        __typename
-        id
-      }
-      likes {
-        __typename
-        id
-      }
-      replies {
-        __typename
-        id
-      }
-      retweets {
-        __typename
-        id
-      }
-      retweet {
-        __typename
-        id
-        text
-        user{
-          name
-        }
-      }
+      ...TweetsFragment
     }
   }
 `

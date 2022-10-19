@@ -4,32 +4,14 @@ import { toast } from '@redwoodjs/web/dist/toast'
 import { FaRetweet } from 'react-icons/fa'
 import { Tweets } from 'types/graphql'
 import { QUERY as TweetsQuery } from '../TweetsCell'
+import { TweetsFragment } from 'src/graphql/TweetsFragment'
+
 
 export const RETWEET_MUTATION = gql`
+  ${TweetsFragment}
   mutation Retweet($input: RetweetInput!) {
     retweet(input: $input) {
-      id
-      createdAt
-      text
-      userId
-      user {
-        name
-      }
-      repliesTo {
-        __typename
-      }
-      likes {
-        __typename
-      }
-      replies {
-        __typename
-      }
-      retweets {
-        __typename
-      }
-      retweet {
-        __typename
-      }
+      ...TweetsFragment
     }
   }
 `

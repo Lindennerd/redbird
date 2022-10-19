@@ -17,12 +17,15 @@ export const schema = gql`
     text: String!
     createdAt: DateTime!
     user: User!
-    likes: Int
-    retweets: Int
-    replies: Int
+    likesCount: Int
+    retweetsCount: Int
+    repliesCount: Int
     replyTo: Tweet
     retweet: Tweet
     currentUserLiked: Boolean
+    likes: [Like]!
+    retweets: [Tweet]
+    replies: [Tweet]
   }
 
 
@@ -58,10 +61,10 @@ export const schema = gql`
 
 
   type Mutation {
-    createTweet(input: CreateTweetInput!): Tweet! @requireAuth
+    createTweet(input: CreateTweetInput!): Tweets! @requireAuth
     reply(input: ReplyTweetInput!): Tweet! @requireAuth
-    retweet(input: RetweetInput!): Tweet! @requireAuth
-    retweetWithComment(input: RetweetWithCommentInput!): Tweet! @requireAuth
+    retweet(input: RetweetInput!): Tweets! @requireAuth
+    retweetWithComment(input: RetweetWithCommentInput!): Tweets! @requireAuth
     updateTweet(id: String!, input: UpdateTweetInput!): Tweet! @requireAuth
     deleteTweet(id: String!): Tweet! @requireAuth
   }

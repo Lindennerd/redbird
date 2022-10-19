@@ -3,32 +3,13 @@ import { toast, Toaster } from '@redwoodjs/web/dist/toast'
 import { Tweet } from 'types/graphql'
 import TweetForm from '../TweetForm/TweetForm'
 import { QUERY as TweetsQuery } from '../TweetsCell'
+import { TweetsFragment } from 'src/graphql/TweetsFragment'
 
 const CREATE = gql`
+  ${TweetsFragment}
   mutation CreateTweet($input: CreateTweetInput!) {
     createTweet(input: $input) {
-      id
-      createdAt
-      text
-      userId
-      user {
-        name
-      }
-      repliesTo {
-        __typename
-      }
-      likes {
-        __typename
-      }
-      replies {
-        __typename
-      }
-      retweets {
-        __typename
-      }
-      retweet {
-        __typename
-      }
+      ...TweetsFragment
     }
   }
 `
