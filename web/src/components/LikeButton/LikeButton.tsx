@@ -1,5 +1,6 @@
 import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/dist/toast'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
 import { Tweets } from 'types/graphql'
 
@@ -17,7 +18,7 @@ const MUTATION_LIKE = gql`
 `
 
 const LikeButton = ({ tweet }: { tweet: Tweets }) => {
-  const { currentUser } = useAuth()
+  const { isAuthenticated } = useAuth()
   const [createLike, { loading, error }] = useMutation(MUTATION_LIKE, {
     update: (cache, { data: { createLike } }) => {
       cache.modify({
@@ -39,13 +40,18 @@ const LikeButton = ({ tweet }: { tweet: Tweets }) => {
   })
 
   function onLikeClick() {
-    createLike({
-      variables: {
-        input: {
-          tweetId: tweet.id,
+
+    if (!isAuthenticated) {
+      toast.error('You must be logged in to do this')
+    } else {
+      createLike({
+        variables: {
+          input: {
+            tweetId: tweet.id,
+          },
         },
-      },
-    })
+      })
+    }
   }
 
   return (

@@ -4,7 +4,7 @@ import Tweet from '../Tweet/Tweet'
 import TweetForm from '../TweetForm/TweetForm'
 import { QUERY as TweetsQuery } from '../TweetsCell'
 import { QUERY as TweetThreadQuery } from '../TweetCell'
-import { Tweet as TweetType } from 'types/graphql'
+import { Tweets } from 'types/graphql'
 
 
 
@@ -25,7 +25,7 @@ const REPLY = gql`
 `
 
 interface ReplyTweetProps {
-  tweet: TweetType
+  tweet: Tweets
 }
 
 const ReplyTweet = ({ tweet }: ReplyTweetProps) => {

@@ -15,6 +15,7 @@ const App = () => (
     <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
       <AuthProvider type="dbAuth" client={WebAuthnClient}>
         <RedwoodApolloProvider>
+          <Toaster />
           <Routes />
         </RedwoodApolloProvider>
       </AuthProvider>
