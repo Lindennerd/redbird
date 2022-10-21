@@ -3,24 +3,32 @@ import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { useState } from 'react'
 import { FaPencilAlt } from 'react-icons/fa'
-import { Tweets } from 'types/graphql'
+import { Tweet as TweetType } from 'types/graphql'
 import Tweet from '../Tweet/Tweet'
 import TweetForm from '../TweetForm/TweetForm'
 import { QUERY as TweetsQuery } from '../TweetsCell'
 import Modal from '../UI/Modal'
-import { TweetsFragment } from 'src/graphql/TweetsFragment'
 
 
 export const RETWEET_WITHCOMMENT_MUTATION = gql`
-  ${TweetsFragment}
   mutation RetweetWithComment($input: RetweetWithCommentInput!) {
     retweetWithComment(input: $input) {
-      ...TweetsFragment
+      _count {
+        likes
+        replies
+        retweets
+      }
+      id
+      text
+      user {
+        name
+        createdAt
+      }
     }
   }
 `
 
-export function RetweetWithComment({ tweet }: { tweet: Tweets }) {
+export function RetweetWithComment({ tweet }: { tweet: TweetType }) {
   const { isAuthenticated } = useAuth()
   const [toggleModal, setToggleModal] = useState(false)
 
@@ -35,7 +43,7 @@ export function RetweetWithComment({ tweet }: { tweet: Tweets }) {
         toast.success('Retweet sent!')
       },
       update: (cache, { data: { retweetWithComment } }) => {
-        const { tweets }: { tweets: Tweets[] } = cache.readQuery({
+        const { tweets }: { tweets: TweetType[] } = cache.readQuery({
           query: TweetsQuery,
         })
         cache.writeQuery({

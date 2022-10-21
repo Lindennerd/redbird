@@ -2,7 +2,7 @@ import { useAuth } from '@redwoodjs/auth'
 import { useMutation } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 import { FaRegHeart, FaHeart } from 'react-icons/fa'
-import { Tweets } from 'types/graphql'
+import { Tweet } from 'types/graphql'
 
 const MUTATION_LIKE = gql`
   mutation LIKE($input: CreateLikeInput!) {
@@ -17,7 +17,7 @@ const MUTATION_LIKE = gql`
   }
 `
 
-const LikeButton = ({ tweet }: { tweet: Tweets }) => {
+const LikeButton = ({ tweet }: { tweet: Tweet }) => {
   const { isAuthenticated } = useAuth()
   const [createLike, { loading, error }] = useMutation(MUTATION_LIKE, {
     update: (cache, { data: { createLike } }) => {
@@ -25,12 +25,12 @@ const LikeButton = ({ tweet }: { tweet: Tweets }) => {
         optimistic: true,
         id: cache.identify(tweet),
         fields: {
-          likesCount: (currLikesRef, { readField }) => {
-            console.log(currLikesRef)
+          _count: (_count, { readField }) => {
+            console.log(_count)
             if (createLike.operation === 'DELETE') {
-              return currLikesRef -1
+              return _count.likes -1
             } else {
-              return currLikesRef +1
+              return _count.likes +1
             }
           },
           currentUserLiked: () => {

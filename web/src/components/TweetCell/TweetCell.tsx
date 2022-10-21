@@ -6,45 +6,56 @@ import Tweet from '../Tweet/Tweet'
 export const QUERY = gql`
   query FindTweetQuery($id: String!) {
     tweet(id: $id) {
+      _count {
+        likes
+        replies
+        retweets
+      }
       id
       text
       createdAt
+      currentUserLiked
       likes {
-        id
-        userId
-      }
-      retweet {
-        id
+        __typename
       }
       userId
-      user {
-        name
-      }
       retweet {
-        id
         text
         user {
           name
         }
       }
+      user {
+        name
+        createdAt
+      }
       replies {
+        _count {
+          likes
+          replies
+          retweets
+        }
         id
         text
         createdAt
-        userId
-        user {
-          name
-        }
-        likes {
-          id
-          userId
-        }
+        currentUserLiked
         replies {
           id
         }
-      }
-      retweets {
-        __typename
+        likes {
+          __typename
+        }
+        userId
+        retweet {
+          text
+          user {
+            name
+          }
+        }
+        user {
+          name
+          createdAt
+        }
       }
     }
   }
@@ -55,7 +66,6 @@ export const Loading = () => (
     <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
   </div>
 )
-
 
 export const Empty = () => <div>Empty</div>
 
@@ -72,7 +82,7 @@ export const Success = ({
     <div>
       <Tweet tweet={tweet} displayActions={true} />
       <div className="ml-4">
-        {tweet.replies.map(reply => (
+        {tweet.replies.map((reply) => (
           <Tweet tweet={reply} key={reply.id} displayActions={true} />
         ))}
       </div>

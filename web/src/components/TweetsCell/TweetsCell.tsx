@@ -2,14 +2,33 @@ import type { TweetsQuery } from 'types/graphql'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 import Tweet from '../Tweet/Tweet'
 import ReactLoading from 'react-loading'
-import { TweetsFragment } from 'src/graphql/TweetsFragment'
-
 
 export const QUERY = gql`
-  ${TweetsFragment}
   query TweetsQuery {
     tweets {
-      ...TweetsFragment
+      _count {
+        likes
+        replies
+        retweets
+      }
+      id
+      text
+      createdAt
+      currentUserLiked
+      likes {
+        __typename
+      }
+      userId
+      retweet{
+        text
+        user {
+          name
+        }
+      }
+      user {
+        name
+        createdAt
+      }
     }
   }
 `
@@ -17,6 +36,7 @@ export const QUERY = gql`
 export const beforeQuery = (props) => {
   return {
     fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-first'
     // pollInterval: 2500
   }
 }

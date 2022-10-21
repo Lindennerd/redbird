@@ -2,20 +2,30 @@ import type {
   QueryResolvers,
   MutationResolvers,
   TweetRelationResolvers,
-  Tweet as TweetType,
-  User,
-  Like
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
-
-
 
 const tweetsInclude = {
   user: true,
   likes: true,
   repliesTo: true,
-  replies: true,
+  replies: {
+    include: {
+      retweets: true,
+      retweet: true,
+      user: true,
+      likes: true,
+      repliesTo: true,
+      _count: {
+        select: {
+          likes: true,
+          replies: true,
+          retweets: true,
+        }
+      }
+    }
+  },
   retweets: true,
   retweet: true,
   _count: {
@@ -24,23 +34,27 @@ const tweetsInclude = {
       replies: true,
       retweets: true,
     },
-}
+  },
 }
 
-
-const mapTweets = (tweet) => {
-  return ({
-    ...tweet,
-    replyTo: tweet.repliesTo,
-    retweet: tweet.retweet,
-    likesCount: tweet._count.likes,
-    retweetsCount: tweet._count.retweets,
-    repliesCount: tweet._count.replies,
+const tweetWithUserLikedField = (tweet) => ({
+  ...tweet,
+  currentUserLiked:
+    context.currentUser &&
+    tweet.likes.some((like) => like.userId === context.currentUser.id),
+  replies: tweet.replies.map((reply) => ({
+    ...reply,
     currentUserLiked:
       context.currentUser &&
       tweet.likes.some((like) => like.userId === context.currentUser.id),
-  })
-}
+  })),
+  retweets: tweet.retweets.map((retweet) => ({
+    ...retweet,
+    currentUserLiked:
+      context.currentUser &&
+      tweet.likes.some((like) => like.userId === context.currentUser.id),
+  })),
+});
 
 export const tweets: QueryResolvers['tweets'] = async () => {
   const tweets = await db.tweet.findMany({
@@ -49,26 +63,27 @@ export const tweets: QueryResolvers['tweets'] = async () => {
     orderBy: { createdAt: 'desc' },
   })
 
-  return tweets.map(mapTweets)
+  return tweets.map(tweetWithUserLikedField)
 }
 
-export const tweet: QueryResolvers['tweet'] = ({ id }) => {
-  return db.tweet.findUnique({
+export const tweet: QueryResolvers['tweet'] = async ({ id }) => {
+  const tweet = await db.tweet.findUnique({
     where: { id },
-    include: {
-      replies: true,
-      retweets: true,
-    },
+    include: tweetsInclude,
   })
+
+  return tweetWithUserLikedField(tweet)
 }
 
-export const createTweet: MutationResolvers['createTweet'] = async ({ input }) => {
+export const createTweet: MutationResolvers['createTweet'] = async ({
+  input,
+}) => {
   const tweet = await db.tweet.create({
     data: input,
-    include: tweetsInclude
-  });
+    include: tweetsInclude,
+  })
 
-  return mapTweets(tweet);
+  return tweetWithUserLikedField(tweet)
 }
 
 export const reply: MutationResolvers['reply'] = ({ input }) => {
@@ -95,23 +110,22 @@ export const retweet: MutationResolvers['retweet'] = async ({ input }) => {
     },
   })
 
-  return mapTweets(retweet)
+  return tweetWithUserLikedField(retweet)
 }
 
-export const retweetWithComment: MutationResolvers['retweetWithComment'] = async ({
-  input,
-}) => {
-  const retweet = await db.tweet.create({
-    include: tweetsInclude,
-    data: {
-      text: input.text,
-      userId: context.currentUser.id,
-      retweetId: input.retweetId,
-    },
-  })
+export const retweetWithComment: MutationResolvers['retweetWithComment'] =
+  async ({ input }) => {
+    const retweet = await db.tweet.create({
+      include: tweetsInclude,
+      data: {
+        text: input.text,
+        userId: context.currentUser.id,
+        retweetId: input.retweetId,
+      },
+    })
 
-    return mapTweets(retweet)
-}
+    return tweetWithUserLikedField(retweet)
+  }
 
 export const updateTweet: MutationResolvers['updateTweet'] = ({
   id,
