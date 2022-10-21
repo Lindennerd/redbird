@@ -14,6 +14,10 @@
 
  @layer components {
   .btn {
-    @apply border px-6 py-2 rounded-full text-white bg-primary hover:bg-secondary
+    @apply border px-6 py-2 rounded-full text-white bg-primary hover:bg-secondary dark:border-0
+  }
+
+  .theme {
+    @apply dark:bg-slate-800 bg-gray-50
   }
  }

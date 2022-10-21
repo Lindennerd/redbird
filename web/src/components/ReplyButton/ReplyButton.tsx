@@ -18,9 +18,9 @@ const ReplyButton = ({ onClick }: { onClick: () => void }) => {
       <button
         onClick={(e) => reply()}
         className="rounded-full  p-2 transition-all
-     hover:bg-slate-200 hover:shadow-md"
+     hover:bg-slate-200 hover:shadow-md hover:text-primary dark:hover:bg-gray-700"
       >
-        <GoReply className="hover:text-primary" />
+        <GoReply />
       </button>
     </>
   )

@@ -60,12 +60,12 @@ const LikeButton = ({ tweet }: { tweet: Tweet }) => {
     <button
       onClick={(e) => onLikeClick()}
       className="rounded-full  p-2 transition-all
-     hover:bg-slate-200 hover:shadow-md"
+     hover:bg-slate-200 hover:shadow-md  hover:text-primary dark:hover:bg-gray-700"
     >
       {tweet.currentUserLiked ? (
-        <FaHeart className="hover:text-primary" />
+        <FaHeart />
       ) : (
-        <FaRegHeart className="hover:text-primary" />
+        <FaRegHeart />
       )}
     </button>
   )

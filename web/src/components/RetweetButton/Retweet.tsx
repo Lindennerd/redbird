@@ -65,7 +65,7 @@ export function Retweet({ tweet }: { tweet: Tweet }) {
     <button
       disabled={loading}
       onClick={(e) => onRetweet()}
-      className="flex w-full items-center gap-2 p-2 hover:bg-slate-100"
+      className="flex w-full items-center gap-2 p-2 hover:bg-slate-100 dark:hover:bg-gray-900"
     >
       <FaRetweet />
       <span>{loading ? 'Sending the retweet...' : 'Retweet'}</span>

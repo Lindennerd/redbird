@@ -57,7 +57,7 @@ const ReplyTweet = ({ tweet }: ReplyTweetProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 ">
       <Tweet tweet={tweet} displayActions={false} />
       <TweetForm onPost={onPost} onLoading={loading} />
     </div>

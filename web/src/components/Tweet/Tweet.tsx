@@ -22,7 +22,8 @@ const Tweet = (props: TweetProps) => {
   }
 
   return (
-    <div className="w-full rounded-md border hover:cursor-pointer hover:bg-slate-100">
+    <div className="w-full rounded-md border hover:cursor-pointer bg-white hover:bg-slate-100
+     dark:border-gray-900 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-900">
       <Link to={routes.tweet({ id: props.tweet.id })}>
         <div className="flex justify-between p-2">
         <span className="text-sm text-gray-500">
@@ -44,16 +45,16 @@ const Tweet = (props: TweetProps) => {
       </Link>
       {props.displayActions && (
         <div className="flex items-center justify-between p-2">
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <ReplyButton onClick={() => setToggleReplyModal(true)} />
             <span>{props.tweet._count.replies}</span>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <RetweetButton tweet={props.tweet} />
             {props.tweet._count.retweets}
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <LikeButton tweet={props.tweet} />
             {props.tweet._count.likes}
           </div>

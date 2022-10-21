@@ -9,14 +9,17 @@ import Routes from 'src/Routes'
 import './scaffold.css'
 import './index.css'
 import { Toaster } from '@redwoodjs/web/dist/toast'
+import { ThemeProvider } from './context/theme.context'
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
     <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
       <AuthProvider type="dbAuth" client={WebAuthnClient}>
         <RedwoodApolloProvider>
-          <Toaster />
-          <Routes />
+          <ThemeProvider>
+            <Toaster />
+            <Routes />
+          </ThemeProvider>
         </RedwoodApolloProvider>
       </AuthProvider>
     </RedwoodProvider>

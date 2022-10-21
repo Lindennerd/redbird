@@ -26,9 +26,9 @@ const TweetForm = ({ onPost, onLoading }: TweetFormProps) => {
   }
 
   return (
-    <div className="rounded-md border p-2 shadow-md">
+    <div className="rounded-md border p-2 shadow-md dark:border-gray-900 dark:text-white bg-white dark:bg-gray-800">
       <textarea
-        className="w-full rounded-md border p-2 outline-none focus:shadow-xl"
+        className="w-full rounded-md p-2 outline-none border focus:shadow-xl dark:bg-gray-700 dark:border-gray-900"
         placeholder="What's going on?"
         name="tweet"
         value={tweet}
