@@ -14,6 +14,7 @@ const Routes = () => {
   return (
     <Router>
       <Set wrap={MainLayout}>
+      <Route path="/profile" page={ProfilePage} name="profile" />
         <Route path="/tweet/{id}" page={TweetPage} name="tweet" />
         <Route path="/login" page={LoginPage} name="login" />
         <Route path="/signup" page={SignupPage} name="signup" />

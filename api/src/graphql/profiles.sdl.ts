@@ -18,7 +18,7 @@ export const schema = gql`
 
   type Query {
     profiles: [Profile!]! @requireAuth
-    profile(id: String!): Profile @requireAuth
+    profile: Profile @requireAuth
   }
 
   input CreateProfileInput {
@@ -43,7 +43,7 @@ export const schema = gql`
 
   type Mutation {
     createProfile(input: CreateProfileInput!): Profile! @requireAuth
-    updateProfile(id: String!, input: UpdateProfileInput!): Profile!
+    updateProfile(input: UpdateProfileInput!): Profile!
       @requireAuth
     deleteProfile(id: String!): Profile! @requireAuth
   }

@@ -10,9 +10,9 @@ export const profiles: QueryResolvers['profiles'] = () => {
   return db.profile.findMany()
 }
 
-export const profile: QueryResolvers['profile'] = ({ id }) => {
+export const profile: QueryResolvers['profile'] = () => {
   return db.profile.findUnique({
-    where: { id },
+    where: { id: context.currentUser.profile.id },
   })
 }
 
@@ -25,12 +25,11 @@ export const createProfile: MutationResolvers['createProfile'] = ({
 }
 
 export const updateProfile: MutationResolvers['updateProfile'] = ({
-  id,
   input,
 }) => {
   return db.profile.update({
     data: input,
-    where: { id },
+    where: { id: context.currentUser.profile.id },
   })
 }
 

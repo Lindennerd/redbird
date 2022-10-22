@@ -27,7 +27,10 @@ export const QUERY = gql`
       }
       user {
         name
-        createdAt
+        createdAt,
+        profile {
+          image
+        }
       }
     }
   }
