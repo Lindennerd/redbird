@@ -27,8 +27,8 @@ const UserDetails = ({ user }: { user: Details }) => {
             <span className="text-gray-600">@{user.name}</span>
           </div>
         </div>
-        {currentUser.id === user.id && <Link role="button" className="btn" to={routes.profile()}>Edit your profile</Link> }
-        {currentUser.id !== user.id && <FollowButton user={user} currentUserFollows={user.currentUserFollows} />}
+        {currentUser && currentUser.id === user.id && <Link role="button" className="btn" to={routes.profile()}>Edit your profile</Link> }
+        {currentUser && currentUser.id !== user.id && <FollowButton user={user} currentUserFollows={user.currentUserFollows} />}
       </div>
 
       <div className="px-8 py-2 dark:text-white">

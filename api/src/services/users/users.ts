@@ -42,7 +42,7 @@ export const user: QueryResolvers['user'] = async ({ id }) => {
   return {
     ...user,
     currentUserFollows: user.followers.some(
-      (follower) => follower.id === context.currentUser.id
+      (follower) => context.currentUser && follower.id === context.currentUser.id
     ),
   }
 }
