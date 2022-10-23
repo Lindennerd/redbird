@@ -33,6 +33,7 @@ export const schema = gql`
     following: [User]!
     tweets: [Tweet]!
     _count: UserCount
+    currentUserFollows: Boolean
   }
 
   type UserCount {
@@ -43,6 +44,14 @@ export const schema = gql`
   type Query {
     users: [User!]! @requireAuth
     user(id: String): UserDetails! @skipAuth
+  }
+
+  type FollowResult {
+    follow: Boolean
+  }
+
+  type Mutation {
+    follow(id: String): FollowResult @requireAuth
   }
 
   input CreateUserInput {

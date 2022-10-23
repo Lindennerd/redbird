@@ -4,6 +4,7 @@ import { FaBaby, FaBirthdayCake, FaLocationArrow, FaWeebly } from 'react-icons/f
 import { GoLocation } from 'react-icons/go'
 import { VscGlobe } from 'react-icons/vsc'
 import { UserDetails as Details } from 'types/graphql'
+import FollowButton from '../FollowButton/FollowButton'
 import Tweet from '../Tweet/Tweet'
 
 const UserDetails = ({ user }: { user: Details }) => {
@@ -27,7 +28,7 @@ const UserDetails = ({ user }: { user: Details }) => {
           </div>
         </div>
         {currentUser.id === user.id && <Link role="button" className="btn" to={routes.profile()}>Edit your profile</Link> }
-        {currentUser.id !== user.id && <button className='btn'>Follow</button>}
+        {currentUser.id !== user.id && <FollowButton user={user} currentUserFollows={user.currentUserFollows} />}
       </div>
 
       <div className="px-8 py-2 dark:text-white">
