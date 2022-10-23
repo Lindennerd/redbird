@@ -28,12 +28,18 @@ const Tweet = (props: TweetProps) => {
     navigate(routes.user({id: props.tweet.user.id}));
   }
 
+  function navigateToTweet(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    navigate(routes.tweet({ id: props.tweet.id }));
+  }
+
   return (
     <div
       className="w-full rounded-md border bg-white hover:cursor-pointer hover:bg-slate-100
      dark:border-gray-900 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-900"
     >
-      <Link to={routes.tweet({ id: props.tweet.id })}>
+      <article onClick={e => navigateToTweet(e)}>
         {props.tweet.retweet && (
           <div className="flex items-center gap-2 p-2 text-gray-600">
             {' '}
@@ -68,7 +74,7 @@ const Tweet = (props: TweetProps) => {
             )}
           </div>
         </div>
-      </Link>
+      </article>
 
       {props.displayActions && (
         <div className="flex items-center justify-between p-2">
