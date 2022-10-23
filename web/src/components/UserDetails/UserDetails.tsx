@@ -1,3 +1,5 @@
+import { useAuth } from '@redwoodjs/auth'
+import { Link, routes } from '@redwoodjs/router'
 import { FaBaby, FaBirthdayCake, FaLocationArrow, FaWeebly } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
 import { VscGlobe } from 'react-icons/vsc'
@@ -5,6 +7,8 @@ import { UserDetails as Details } from 'types/graphql'
 import Tweet from '../Tweet/Tweet'
 
 const UserDetails = ({ user }: { user: Details }) => {
+  const {currentUser} = useAuth();
+
   return (
     <div>
       <div className="bg-secondary p-10"></div>
@@ -22,7 +26,8 @@ const UserDetails = ({ user }: { user: Details }) => {
             <span className="text-gray-600">@{user.name}</span>
           </div>
         </div>
-        <button className='btn'>Follow</button>
+        {currentUser.id === user.id && <Link role="button" className="btn" to={routes.profile()}>Edit your profile</Link> }
+        {currentUser.id !== user.id && <button className='btn'>Follow</button>}
       </div>
 
       <div className="px-8 py-2 dark:text-white">

@@ -44,7 +44,6 @@ export const QUERY = gql`
 `
 
 export const beforeQuery = (props) => {
-  console.log(props)
   return {
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-first',
