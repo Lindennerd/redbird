@@ -22,8 +22,27 @@ export const schema = gql`
     credentials: [UserCredential]!
   }
 
+  type UserDetails {
+    id: String!
+    name: String!
+    email: String!
+    createdAt: DateTime!
+    profile: Profile!
+    followers: [User]!
+    followingId: String
+    following: [User]!
+    tweets: [Tweet]!
+    _count: UserCount
+  }
+
+  type UserCount {
+    followers: Int
+    following: Int
+  }
+
   type Query {
     users: [User!]! @requireAuth
+    user(id: String): UserDetails! @skipAuth
   }
 
   input CreateUserInput {

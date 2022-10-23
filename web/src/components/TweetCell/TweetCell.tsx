@@ -18,16 +18,26 @@ export const QUERY = gql`
       likes {
         __typename
       }
-      userId
       retweet {
+        id
         text
+        createdAt
         user {
+          id
           name
+          profile {
+            displayName
+            image
+          }
         }
       }
       user {
+        id
         name
-        createdAt
+        profile {
+          displayName
+          image
+        }
       }
       replies {
         _count {
@@ -45,16 +55,25 @@ export const QUERY = gql`
         likes {
           __typename
         }
-        userId
         retweet {
           text
           user {
+            id
             name
+            profile {
+              displayName
+              image
+            }
           }
         }
         user {
+          id
           name
           createdAt
+          profile {
+            displayName
+            image
+          }
         }
       }
     }
@@ -81,10 +100,15 @@ export const Success = ({
   return (
     <div>
       <Tweet tweet={tweet} displayActions={true} />
-      <div className="ml-4">
-        {tweet.replies.map((reply) => (
-          <Tweet tweet={reply} key={reply.id} displayActions={true} />
-        ))}
+      <div>
+        <div className="flex">
+          <div className="p-4 border-l-2 ml-2 border-l-gray-600"></div>
+          <div className="flex flex-col w-full gap-2 mt-2">
+          {tweet.replies.map((reply) => (
+            <Tweet tweet={reply} key={reply.id} displayActions={true} />
+          ))}
+          </div>
+        </div>
       </div>
     </div>
   )

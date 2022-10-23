@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <>
       <MetaTags title="Home" description="Home page" />
-      <div>
+      <div className="p-2">
         <TweetView />
       </div>
     </>

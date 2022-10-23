@@ -18,18 +18,26 @@ export const QUERY = gql`
       likes {
         __typename
       }
-      userId
-      retweet{
+      retweet {
+        id
         text
+        createdAt
         user {
+          id
           name
+          profile {
+            image
+            displayName
+          }
         }
       }
       user {
+        id
         name
-        createdAt,
+        createdAt
         profile {
           image
+          displayName
         }
       }
     }
@@ -39,7 +47,7 @@ export const QUERY = gql`
 export const beforeQuery = (props) => {
   return {
     fetchPolicy: 'network-only',
-    nextFetchPolicy: 'cache-first'
+    nextFetchPolicy: 'cache-first',
     // pollInterval: 2500
   }
 }

@@ -9,6 +9,29 @@ export const users: QueryResolvers['users'] = () => {
 export const user: QueryResolvers['user'] = ({ id }) => {
   return db.user.findUnique({
     where: { id },
+    include: {
+      profile: true,
+      tweets: {
+        select: {
+          id: true,
+          text: true,
+          createdAt: true,
+          _count: {
+            select: {
+              likes: true,
+              replies: true,
+              retweets: true
+            }
+          }
+        }
+      },
+      _count: {
+        select: {
+          followers: true,
+          following: true
+        }
+      }
+    }
   })
 }
 

@@ -7,7 +7,7 @@ type MainLayoutProps = {
 const MainLayout = ({ children }: MainLayoutProps) => {
   return <main className="min-h-screen theme transition-colors">
     <Navbar />
-    <main className="pt-20 p-2">
+    <main className="pt-16">
       {children}
     </main>
   </main>

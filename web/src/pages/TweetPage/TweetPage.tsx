@@ -7,7 +7,9 @@ const TweetPage = ({id}: {id: string}) => {
   return (
     <>
       <MetaTags title="Tweet" description="Tweet page" />
+      <div className="p-2">
       <TweetCell id={id} />
+      </div>
     </>
   )
 }
