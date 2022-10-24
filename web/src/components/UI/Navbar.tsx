@@ -1,18 +1,35 @@
-import { Link, routes } from "@redwoodjs/router"
-import { VscMenu } from "react-icons/vsc"
-import { NavbarUser } from "./NavbarUser"
+import { useAuth } from '@redwoodjs/auth'
+import { Link, routes } from '@redwoodjs/router'
+import { VscMenu } from 'react-icons/vsc'
+import { NavbarUser } from './NavbarUser'
 
 export default function Navbar() {
+  const { isAuthenticated } = useAuth()
+
   return (
-    <div className={`fixed top-0 z-10 h-16 w-full bg-white bg-opacity-80 p-4 dark:bg-gray-700 dark:bg-opacity-80 dark:text-white`}>
-      <div className="flex items-center justify-between">
+    <div
+      className={`fixed left-16 top-0 z-10 flex h-14 w-full items-center bg-white bg-opacity-80 px-4
+      dark:bg-gray-800 dark:bg-opacity-80 dark:text-white sm:left-32`}
+    >
+      <div className="flex w-full items-center justify-between">
         <div>
-          <VscMenu />
+          <Link className="text-xl font-semibold" to={routes.home()}>
+            Redbird
+          </Link>
         </div>
-        <div>
-          <Link to={routes.home()}>Redbird</Link>
-        </div>
-        <NavbarUser />
+        {!isAuthenticated && (
+          <div className="flex gap-2 pr-32">
+            <Link className="transition-all hover:border-b" to={routes.login()}>
+              Login
+            </Link>
+            <Link
+              className="transition-all hover:border-b"
+              to={routes.signup()}
+            >
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )

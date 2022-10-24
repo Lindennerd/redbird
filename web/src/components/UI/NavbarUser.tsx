@@ -4,6 +4,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { Fragment, useEffect, useState } from 'react'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { CgLogOut, CgProfile } from 'react-icons/cg'
+import {BiDotsVerticalRounded} from "react-icons/bi"
 
 export function NavbarUser() {
   const { currentUser, isAuthenticated, logIn, logOut } = useAuth()
@@ -12,11 +13,11 @@ export function NavbarUser() {
     return (
       <div>
         <Menu as="div" className="relative inline-block text-left">
-          <Menu.Button className="rounded-full transition-all hover:shadow-md">
-            <img
-              src={currentUser.profile.image}
-              className="w-10 rounded-full"
-            />
+          <Menu.Button className="rounded-full transition-all hover:shadow-md h-auto">
+              <img
+                src={currentUser.profile.image}
+                className="rounded-full block md:hidden w-16"
+              />
           </Menu.Button>
           <Transition
             as={Fragment}
@@ -28,7 +29,7 @@ export function NavbarUser() {
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items
-              className="absolute right-0 mt-2 flex w-40 origin-top-right flex-col justify-items-end rounded-md bg-white
+              className="absolute top-[-150px] mt-2 flex w-40 origin-top-right flex-col justify-items-end rounded-md bg-white
               shadow-lg ring-1
            ring-black ring-opacity-5 focus:outline-none  dark:bg-gray-700 dark:ring-gray-900"
             >
@@ -36,15 +37,6 @@ export function NavbarUser() {
                 <span className="flex w-full items-center justify-start gap-2 px-2 py-1 text-gray-400">
                   {`@${currentUser.name}`}
                 </span>
-              </Menu.Item>
-              <Menu.Item as={Fragment}>
-                <Link
-                  to={routes.profile()}
-                  className="flex w-full items-center justify-start gap-2 px-2 py-3 dark:hover:bg-gray-900 "
-                >
-                  <CgProfile />
-                  Profile
-                </Link>
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 <>
@@ -66,10 +58,5 @@ export function NavbarUser() {
       </div>
     )
   else
-    return (
-      <div className="flex items-center gap-2">
-        <Link to={routes.login()}>Login</Link>
-        <Link to={routes.signup()}>Register</Link>
-      </div>
-    )
+    return <></>
 }

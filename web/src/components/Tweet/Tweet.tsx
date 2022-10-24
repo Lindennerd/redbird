@@ -7,6 +7,7 @@ import RetweetButton from '../RetweetButton/RetweetButton'
 import Modal from '../UI/Modal'
 import { Tweet as TweetType } from 'types/graphql'
 import { FaRetweet } from 'react-icons/fa'
+import { ProfileImage } from '../UI/ProfileImage'
 
 interface TweetProps {
   displayActions: boolean
@@ -49,7 +50,7 @@ const Tweet = (props: TweetProps) => {
         <div className="flex items-start gap-4 p-2">
           <a onClick={e => navigateToUser(e)}>
             <img
-              className="w-14 rounded-full"
+              className="w-14 min-w-14 rounded-full"
               src={props.tweet.user.profile.image}
               alt=""
             />
