@@ -16,14 +16,6 @@ model User {
   profile        Profile  @relation(fields: [profileId], references: [id])
   profileId      String
 
-  followerId String?
-  follower   User?   @relation("Followers", fields: [followerId], references: [id])
-  followers  User[]  @relation("Followers")
-
-  followingId String?
-  follow      User?   @relation("followings", fields: [followingId], references: [id])
-  following   User[]  @relation("followings")
-
   tweets              Tweet[]
   Like                Like[]
   salt                String
@@ -31,6 +23,20 @@ model User {
   resetTokenExpiresAt DateTime?
   webAuthnChallenge   String?          @unique
   credentials         UserCredential[]
+  following           UserFollows[]    @relation("UserFollowsUser")
+  followers           UserFollows[]    @relation("UserFollowsTarget")
+}
+
+model UserFollows {
+  id        String   @id @default(uuid())
+  user      User     @relation("UserFollowsUser", fields: [userId], references: [id])
+  userId    String
+  target    User     @relation("UserFollowsTarget", fields: [targetId], references: [id])
+  targetId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("user_follows")
 }
 
 model UserCredential {

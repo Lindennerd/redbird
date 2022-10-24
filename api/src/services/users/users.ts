@@ -42,40 +42,36 @@ export const user: QueryResolvers['user'] = async ({ id }) => {
   return {
     ...user,
     currentUserFollows: user.followers.some(
-      (follower) => context.currentUser && follower.id === context.currentUser.id
+      (follower) => context.currentUser && follower.userId === context.currentUser.id
     ),
   }
 }
 
 export const follow: MutationResolvers['follow'] = async ({id}) => {
-  const userFollows = await db.user.findFirst({
+  const userFollows = await db.userFollows.findFirst({
     where: {
-      AND: [{ id: context.currentUser.id }, { following: { some: { id: { equals: id } }  } }],
+      AND: [
+        { userId: context.currentUser.id },
+        {targetId: id}
+      ],
     },
   })
 
-  if (userFollows) {
-    await db.user.update({
-      where: { id: context.currentUser.id },
+  if (!userFollows) {
+    await db.userFollows.create({
       data: {
-        following: {
-          disconnect: { id },
-        },
-      },
+        userId: context.currentUser.id,
+        targetId: id
+      }
+    })
+
+    return {follow: true};
+  } else {
+    await db.userFollows.delete({
+      where: { id: userFollows.id },
     });
 
     return {follow: false};
-  } else {
-    await db.user.update({
-      where: { id: context.currentUser.id },
-      data: {
-        following: {
-          connect: { id },
-        },
-      },
-    });
-
-    return {follow: true};
   }
 
 
@@ -85,14 +81,8 @@ export const User: UserRelationResolvers = {
   profile: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).profile()
   },
-  follower: (_obj, { root }) => {
-    return db.user.findUnique({ where: { id: root?.id } }).follower()
-  },
   followers: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).followers()
-  },
-  follow: (_obj, { root }) => {
-    return db.user.findUnique({ where: { id: root?.id } }).follow()
   },
   following: (_obj, { root }) => {
     return db.user.findUnique({ where: { id: root?.id } }).following()

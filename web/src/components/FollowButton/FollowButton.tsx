@@ -25,10 +25,10 @@ const FollowButton = ({user, currentUserFollows}: {user: UserDetails, currentUse
           currentUserFollows: (currentUserFollows) => {
             return follow.follow
           },
-          // _count: (_count) => {
-          //   if(follow.follow) return _count.followes +1
-          //   else return _count.followes -1
-          // }
+          _count: (_count) => {
+            if(follow.follow) return _count.followers +1
+            else return _count.followers -1
+          }
         }
       })
     }

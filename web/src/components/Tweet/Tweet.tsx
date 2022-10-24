@@ -39,7 +39,7 @@ const Tweet = (props: TweetProps) => {
       className="w-full rounded-md border bg-white hover:cursor-pointer hover:bg-slate-100
      dark:border-gray-900 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-900"
     >
-      <article onClick={e => navigateToTweet(e)} tabIndex={0} aria-labelled-by={props.tweet.id} role="article">
+      <article onClick={e => navigateToTweet(e)} tabIndex={0} aria-labelledby={props.tweet.id} role="article">
         {props.tweet.retweet && (
           <div className="flex items-center gap-2 p-2 text-gray-600">
             {' '}
