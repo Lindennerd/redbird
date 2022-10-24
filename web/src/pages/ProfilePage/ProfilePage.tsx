@@ -16,27 +16,29 @@ const PROFILE_MUTATTION = gql`
 const ProfilePage = () => {
   const {currentUser} = useAuth();
   const [updateProfile, {loading, error}] = useMutation(PROFILE_MUTATTION, {
-    onCompleted() {
-      navigate(routes.home());
-    },
     onError(error) {
       console.error(error);
       toast.error('Something went wrong while updating your profile :/ ')
     }
   });
 
-  function onSubmit(profile: Profile) {
-    updateProfile({
+  async function onSubmit(profile: Profile, {redirects} : {redirects?: boolean}) {
+    await updateProfile({
       variables: {
         input: profile
       }
     });
+
+    if(redirects) navigate(routes.home());
   }
 
   return (
     <>
       <MetaTags title="Profile" description="Profile page" />
-      {currentUser && <ProfileForm profile={currentUser?.profile} onSubmit={onSubmit} loading={loading} />}
+      {currentUser && <ProfileForm
+        profile={currentUser?.profile}
+        onSubmit={onSubmit}
+        loading={loading} />}
     </>
   )
 }

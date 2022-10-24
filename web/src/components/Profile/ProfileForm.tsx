@@ -6,23 +6,29 @@ import { ProfileImage } from './ProfileImage'
 
 interface ProfileFormProps {
   profile: Profile
-  onSubmit: (profile: UpdateProfileInput) => void
+  onSubmit: (
+    profile: UpdateProfileInput,
+    { redirects }: { redirects?: boolean }
+  ) => void
   loading: boolean
 }
 
 export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
-  const {id, ...rest} = profile;
+  const { id, ...rest } = profile
   const [profileForm, setProfileForm] = useState<UpdateProfileInput>(rest)
-  const [imageModal, setImageModal] = useState(false);
+  const [imageModal, setImageModal] = useState(false)
 
   function handleSubmit(e) {
     e.preventDefault()
-    onSubmit(profileForm);
+    onSubmit(profileForm, { redirects: true })
   }
 
   function setNewImage(image: string) {
-    setProfileForm(form => ({...form, image: image}))
-    setImageModal(false);
+    setProfileForm((form) => ({ ...form, image: image }))
+    onSubmit({...profileForm, image}, {
+      redirects: false,
+    })
+    setImageModal(false)
   }
 
   return (
@@ -35,8 +41,8 @@ export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
             className="w-20 rounded-full"
           />
           <button
-          onClick={e => setImageModal(true)}
-            type='button'
+            onClick={(e) => setImageModal(true)}
+            type="button"
             className="absolute flex h-20 w-20 items-center justify-center rounded-full bg-slate-600
             bg-opacity-30 p-2 opacity-0 transition-all hover:opacity-100"
           >
@@ -55,10 +61,13 @@ export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
           <input
             value={profileForm.displayName}
             onChange={(e) =>
-              setProfileForm((form) => ({ ...form, displayName: e.target.value }))
+              setProfileForm((form) => ({
+                ...form,
+                displayName: e.target.value,
+              }))
             }
             type="text"
-            className="rounded-md p-2 outline-none border dark:bg-gray-700 dark:border-gray-900"
+            className="rounded-md border p-2 outline-none dark:border-gray-900 dark:bg-gray-700"
             name="displayName"
           />
         </div>
@@ -69,7 +78,7 @@ export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
             onChange={(e) =>
               setProfileForm((form) => ({ ...form, bio: e.target.value }))
             }
-            className="rounded-md p-2 outline-none border dark:bg-gray-700 dark:border-gray-900"
+            className="rounded-md border p-2 outline-none dark:border-gray-900 dark:bg-gray-700"
             name="bio"
           ></textarea>
         </div>
@@ -81,7 +90,7 @@ export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
               setProfileForm((form) => ({ ...form, location: e.target.value }))
             }
             type="text"
-            className="rounded-md p-2 outline-none border dark:bg-gray-700 dark:border-gray-900"
+            className="rounded-md border p-2 outline-none dark:border-gray-900 dark:bg-gray-700"
             name="location"
           />
         </div>
@@ -93,7 +102,7 @@ export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
               setProfileForm((form) => ({ ...form, website: e.target.value }))
             }
             type="url"
-            className="rounded-md p-2 outline-none border dark:bg-gray-700 dark:border-gray-900"
+            className="rounded-md border p-2 outline-none dark:border-gray-900 dark:bg-gray-700"
             name="website"
           />
         </div>
@@ -105,7 +114,7 @@ export function ProfileForm({ profile, onSubmit, loading }: ProfileFormProps) {
               setProfileForm((form) => ({ ...form, birth: e.target.value }))
             }
             type="date"
-            className="rounded-md p-2 outline-none border dark:bg-gray-700 dark:border-gray-900"
+            className="rounded-md border p-2 outline-none dark:border-gray-900 dark:bg-gray-700"
             name="birth"
             itemType="date"
           />
