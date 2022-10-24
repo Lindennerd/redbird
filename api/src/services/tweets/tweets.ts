@@ -22,9 +22,9 @@ const tweetsInclude = {
           likes: true,
           replies: true,
           retweets: true,
-        }
-      }
-    }
+        },
+      },
+    },
   },
   retweets: true,
   retweet: true,
@@ -54,14 +54,36 @@ const tweetWithUserLikedField = (tweet) => ({
       context.currentUser &&
       tweet.likes.some((like) => like.userId === context.currentUser.id),
   })),
-});
+})
 
 export const tweets: QueryResolvers['tweets'] = async () => {
-  const tweets = await db.tweet.findMany({
-    include: tweetsInclude,
-    where: { repliesToId: null },
-    orderBy: { createdAt: 'desc' },
-  })
+  const tweets = context.currentUser
+    ? await db.tweet.findMany({
+        include: tweetsInclude,
+        where: {
+          AND: [
+            { repliesToId: null },
+            {
+              OR: [
+                {
+                  userId: context.currentUser.id
+                },
+                {
+                  user: { followers: { some: { userId: context.currentUser.id } } },
+                },
+              ]
+            }
+          ],
+        },
+        orderBy: { createdAt: 'desc' },
+      })
+    : await await db.tweet.findMany({
+        include: tweetsInclude,
+        where: {
+          repliesToId: null,
+        },
+        orderBy: { createdAt: 'desc' },
+      })
 
   return tweets.map(tweetWithUserLikedField)
 }
