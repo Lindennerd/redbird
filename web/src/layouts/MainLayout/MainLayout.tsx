@@ -6,13 +6,19 @@ type MainLayoutProps = {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  return <main className="min-h-screen theme transition-colors">
+  return <main className="min-h-screen theme transition-colors flex flex-row">
+    <div className="border-r">
+      <Sidebar />
+    </div>
+    <div className="w-full">
+
     <Navbar />
-    <Sidebar />
-    <div className="ml-10 sm:ml-32 pt-12">
+    <div>
       {children}
     </div>
+    </div>
   </main>
+
 }
 
 export default MainLayout

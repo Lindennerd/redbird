@@ -11,11 +11,10 @@ import { NavbarUser } from './NavbarUser';
 import { SidebarItem } from './SideBarItem'
 
 export function Sidebar() {
-  const { currentUser } = useAuth();
 
   return (
     <div
-      className="fixed  h-full w-12
+      className="w-12 sticky top-0 h-screen
      py-2 dark:bg-gray-800 dark:bg-opacity-80 dark:text-white sm:w-32"
     >
       <div className='flex flex-col gap-4 overflow-hidden'>
@@ -39,10 +38,6 @@ export function Sidebar() {
           <BiCommentAdd className="text-2xl" />
           <span>Tweet</span>
         </SidebarItem>
-      </div>
-
-      <div className="absolute bottom-2 w-full flex items-center justify-center">
-        <NavbarUser />
       </div>
     </div>
   )

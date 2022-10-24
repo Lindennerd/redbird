@@ -8,8 +8,8 @@ export default function Navbar() {
 
   return (
     <div
-      className={`fixed left-16 top-0 z-10 flex h-14 w-full items-center bg-white bg-opacity-80 px-4
-      dark:bg-gray-800 dark:bg-opacity-80 dark:text-white sm:left-32`}
+      className={`left-16 top-0 z-10 flex h-14 w-full tems-center sticky
+      bg-white bg-opacity-80 px-4 dark:bg-gray-800 dark:bg-opacity-80 dark:text-white sm:left-32`}
     >
       <div className="flex w-full items-center justify-between">
         <div>
@@ -17,8 +17,14 @@ export default function Navbar() {
             Redbird
           </Link>
         </div>
+        { isAuthenticated && (
+          <div className='flex w-12'>
+            <NavbarUser />
+          </div>
+        )}
+
         {!isAuthenticated && (
-          <div className="flex gap-2 pr-32">
+          <div className="flex gap-2 ">
             <Link className="transition-all hover:border-b" to={routes.login()}>
               Login
             </Link>
