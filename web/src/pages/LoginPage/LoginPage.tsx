@@ -13,6 +13,7 @@ import {
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
+import ReactLoading from 'react-loading'
 
 const WELCOME_MESSAGE = 'Welcome back!'
 const REDIRECT = routes.home()
@@ -234,10 +235,12 @@ const LoginPage = ({ type }) => {
     }
   }
 
-  // if (loading) {
-  //   console.log('loading')
-  //   return <div>Loading</div>
-  // }
+  if (loading) {
+    console.log('loading')
+    return   <div className="flex items-center justify-center">
+    <ReactLoading type="bubbles" color="#EF3109" height={'10%'} width={'10%'} />
+  </div>
+  }
 
   return (
     <>
