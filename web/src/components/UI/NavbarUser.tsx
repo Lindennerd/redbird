@@ -47,7 +47,9 @@ export function NavbarUser() {
                 </Link>
               </Menu.Item>
               <Menu.Item as={Fragment}>
-                <ThemeSwitcher />
+                <>
+                  <ThemeSwitcher />
+                </>
               </Menu.Item>
               <Menu.Item as={Fragment}>
                 <button
