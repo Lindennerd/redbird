@@ -1,5 +1,4 @@
 import { useAuth } from '@redwoodjs/auth'
-import { toast, Toaster } from '@redwoodjs/web/dist/toast'
 import { useState } from 'react'
 
 interface TweetInput {
@@ -34,7 +33,7 @@ const TweetForm = ({ onPost, onLoading }: TweetFormProps) => {
         value={tweet}
         onChange={(e) => setTweet(e.target.value)}
       />
-
+      <div></div>
       <div className="flex justify-between">
         <div>Tweet Stuff</div>
         <button

@@ -42,7 +42,7 @@ const Tweet = (props: TweetProps) => {
     >
       <article onClick={e => navigateToTweet(e)} tabIndex={0} aria-labelledby={props.tweet.id} role="article">
         {props.tweet.retweet && (
-          <div className="flex items-center gap-2 p-2 text-gray-600">
+          <div className="flex items-center gap-2 p-2 dark:text-gray-400 text-gray-600">
             {' '}
             <FaRetweet /> {props.tweet.retweet.user.name}
           </div>
@@ -62,7 +62,7 @@ const Tweet = (props: TweetProps) => {
                 <span className="font-semibold">
                   {props.tweet.user.profile.displayName}
                 </span>
-                <span className="text-gray-600">
+                <span className="dark:text-gray-400 text-gray-600">
                   @{props.tweet.user.name} - {dateFormat(props.tweet.createdAt)}
                 </span>
               </a>
