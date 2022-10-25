@@ -14,6 +14,7 @@ const Routes = () => {
   return (
     <Router>
       <Set wrap={MainLayout}>
+      <Route path="/about" page={AboutPage} name="about" />
         <Route path="/user/{id:String}" page={UserPage} name="user" />
         <Route path="/profile" page={ProfilePage} name="profile" />
         <Route path="/tweet/{id}" page={TweetPage} name="tweet" />

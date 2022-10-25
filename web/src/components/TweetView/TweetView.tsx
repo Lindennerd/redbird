@@ -8,7 +8,7 @@ const TweetView = () => {
   return (
     <div className="flex flex-col gap-2">
       {isAuthenticated && <NewTweet />}
-      <TweetsCell />
+        <TweetsCell />
     </div>
   )
 }

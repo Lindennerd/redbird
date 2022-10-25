@@ -7,6 +7,7 @@ import {
   BiSearch,
   BiUserCircle,
 } from 'react-icons/bi'
+import {SiAboutdotme} from "react-icons/si"
 import { NavbarUser } from './NavbarUser';
 import { SidebarItem } from './SideBarItem'
 
@@ -38,6 +39,11 @@ export function Sidebar() {
           <BiCommentAdd className="text-2xl" />
           <span>Tweet</span>
         </SidebarItem>
+         <SidebarItem onClick={() => navigate(routes.about())}>
+          <SiAboutdotme className="text-2xl" />
+          <span>About </span>
+        </SidebarItem>
+
       </div>
     </div>
   )
