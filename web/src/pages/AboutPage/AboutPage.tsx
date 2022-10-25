@@ -7,11 +7,14 @@ const AboutPage = () => {
   return (
     <>
       <MetaTags title="About" description="About page" />
-      <div className="flex flex-col items-center justify-center dark:text-white">
+      <div className="flex flex-col items-center justify-center gap-2 dark:text-white">
+        <div className='w-32 rounded-md'>
+          <img src="eumemo.jpg" className='rounded-md' alt="a selfie of myself" />
+        </div>
         <h1 className="text-3xl font-semibold">Hello, I'm Lindennerd</h1>
         <pre>The developer behind this project</pre>
 
-        <article className="mt-8 w-1/2 space-y-4 text-justify">
+        <article className="mt-8 w-full p-2 sm:w-1/2 space-y-4 text-justify">
           <p>
             I love coding ever since I was a boy, always loved to build things
             that others can enjoy, software that make theirs life better, be it
