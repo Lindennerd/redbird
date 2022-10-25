@@ -1,4 +1,4 @@
-import { useAuth } from '@redwoodjs/auth';
+import { useAuth } from '@redwoodjs/auth'
 import { Link, navigate, routes } from '@redwoodjs/router'
 import {
   BiBell,
@@ -7,20 +7,23 @@ import {
   BiSearch,
   BiUserCircle,
 } from 'react-icons/bi'
-import {SiAboutdotme} from "react-icons/si"
-import { NavbarUser } from './NavbarUser';
+import { SiAboutdotme } from 'react-icons/si'
+import { NavbarUser } from './NavbarUser'
 import { SidebarItem } from './SideBarItem'
 
 export function Sidebar() {
-
   return (
     <div
-      className="w-12 sticky top-0 h-screen
+      className="sticky top-0 h-screen w-12
      py-2 dark:bg-gray-800 dark:bg-opacity-80 dark:text-white sm:w-32"
     >
-      <div className='flex flex-col gap-4 overflow-hidden'>
-        <button className="flex items-center justify-center gap-6 p-2 rounded-full">
-          <img src="m-d-redbird.svg" alt="Logo" className="w-12 hidden dark:block" />
+      <div className="flex flex-col gap-4 overflow-hidden">
+        <button className="flex items-center justify-center gap-6 rounded-full p-2">
+          <img
+            src="m-d-redbird.svg"
+            alt="Logo"
+            className="hidden w-12 dark:block"
+          />
           <img src="m-redbird.svg" alt="Logo" className="w-12 dark:hidden" />
         </button>
         <SidebarItem onClick={() => navigate(routes.home())}>
@@ -35,15 +38,10 @@ export function Sidebar() {
         <SidebarItem onClick={() => navigate(routes.profile())}>
           <BiUserCircle className="text-2xl" /> <span>Profile</span>
         </SidebarItem>
-        <SidebarItem>
-          <BiCommentAdd className="text-2xl" />
-          <span>Tweet</span>
-        </SidebarItem>
-         <SidebarItem onClick={() => navigate(routes.about())}>
+        <SidebarItem onClick={() => navigate(routes.about())}>
           <SiAboutdotme className="text-2xl" />
           <span>About </span>
         </SidebarItem>
-
       </div>
     </div>
   )
