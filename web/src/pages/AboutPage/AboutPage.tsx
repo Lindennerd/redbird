@@ -16,10 +16,10 @@ const AboutPage = () => {
 
         <article className="mt-8 w-full p-2 sm:w-1/2 space-y-4 text-justify">
           <p>
-            I love coding ever since I was a boy, always loved to build things
-            that others can enjoy, software that make theirs life better, be it
-            because made them laugh, because they had fun, because it automated
-            away that awfull boring task that they hate.
+            I love coding ever since I was a young boy, I always loved to build things
+            that others can enjoy, software that make their life better, be it
+            because made them laugh, because they had fun using it or just because it automated
+            away that awfull boring task.
           </p>
           <p>
             It was because of this passion for technology and its potential that
