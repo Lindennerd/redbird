@@ -27,7 +27,7 @@ const AboutPage = () => {
             this world.
           </p>
           <p className="text-center font-semibold">
-            Maybe I might help you as well 😉 <br />
+            Maybe I can help you as well 😉 <br />
             Feel free to reach me out in my socials below
           </p>
 
