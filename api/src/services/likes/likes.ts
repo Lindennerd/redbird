@@ -41,6 +41,15 @@ export const createLike: MutationResolvers['createLike'] = async ({ input }) => 
       },
     })
 
+    console.log('CREATING NOTIFICATION')
+    await db.notification.create({
+        data: {
+          event: 'LIKED',
+          tweetId: input.tweetId,
+          userId: context.currentUser.id
+        }
+    })
+
     return {like, operation: 'CREATE'}
   }
 

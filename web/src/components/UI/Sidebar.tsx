@@ -8,6 +8,7 @@ import {
   BiUserCircle,
 } from 'react-icons/bi'
 import { SiAboutdotme } from 'react-icons/si'
+import NotificationsButton from '../Notifications/NotificationsButton'
 import { NavbarUser } from './NavbarUser'
 import { SidebarItem } from './SideBarItem'
 
@@ -30,7 +31,7 @@ export function Sidebar() {
           <BiHome className="text-2xl" /> <span>Home</span>
         </SidebarItem>
         <SidebarItem>
-          <BiBell className="text-2xl" /> <span>News</span>
+         <NotificationsButton />
         </SidebarItem>
         <SidebarItem>
           <BiSearch className="text-2xl" /> <span>Search</span>

@@ -77,7 +77,7 @@ export const tweets: QueryResolvers['tweets'] = async () => {
         },
         orderBy: { createdAt: 'desc' },
       })
-    : await await db.tweet.findMany({
+    :  await db.tweet.findMany({
         include: tweetsInclude,
         where: {
           repliesToId: null,
@@ -108,8 +108,8 @@ export const createTweet: MutationResolvers['createTweet'] = async ({
   return tweetWithUserLikedField(tweet)
 }
 
-export const reply: MutationResolvers['reply'] = ({ input }) => {
-  return db.tweet.create({
+export const reply: MutationResolvers['reply'] = async ({ input }) => {
+  const tweet = await db.tweet.create({
     data: {
       text: input.text,
       userId: input.userId,
@@ -119,7 +119,17 @@ export const reply: MutationResolvers['reply'] = ({ input }) => {
       replies: true,
       retweets: true,
     },
-  })
+  });
+
+  await db.notification.create({
+    data: {
+      event: 'REPLYED',
+      tweetId: input.repliesTo,
+      userId: input.userId
+    }
+  });
+
+  return tweet;
 }
 
 export const retweet: MutationResolvers['retweet'] = async ({ input }) => {
@@ -131,6 +141,14 @@ export const retweet: MutationResolvers['retweet'] = async ({ input }) => {
       retweetId: input.retweetId,
     },
   })
+
+  await db.notification.create({
+    data: {
+      event: 'RETWEETED',
+      tweetId: input.retweetId,
+      userId: context.currentUser.id
+    }
+  });
 
   return tweetWithUserLikedField(retweet)
 }
