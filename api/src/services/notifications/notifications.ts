@@ -6,11 +6,17 @@ import type {
 import { db } from 'src/lib/db'
 
 export const notifications: QueryResolvers['notifications'] = () => {
-  return db.notification.findMany()
+  return db.notification.findMany({
+    where: {
+      userId: context.currentUser.id
+    }
+  })
 }
 
 export const countNotifications: QueryResolvers['countNotifications'] = () => {
-  return db.notification.count();
+  return db.notification.count({
+    where: { userId: context.currentUser.id}
+  });
 }
 
 export const Notification: NotificationRelationResolvers = {

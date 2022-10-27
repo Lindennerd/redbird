@@ -89,6 +89,7 @@ model Notification {
   event   NotificationEvent
   userId  String
   tweetId String
+  viewed  Boolean           @default(false)
 }
 
 enum NotificationEvent {

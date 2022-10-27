@@ -6,6 +6,7 @@ export const schema = gql`
     event: NotificationEvent!
     userId: String!
     tweetId: String!
+    viewed: Boolean!
   }
 
   enum NotificationEvent {
