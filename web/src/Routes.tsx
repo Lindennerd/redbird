@@ -13,6 +13,7 @@ import  MainLayout  from 'src/layouts/MainLayout/MainLayout';
 const Routes = () => {
   return (
     <Router>
+      <Route path="/notifications" page={NotificationsPage} name="notifications" />
       <Set wrap={MainLayout}>
       <Route path="/about" page={AboutPage} name="about" />
         <Route path="/user/{id:String}" page={UserPage} name="user" />
