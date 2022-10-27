@@ -9,10 +9,8 @@ export const notifications: QueryResolvers['notifications'] = () => {
   return db.notification.findMany()
 }
 
-export const notification: QueryResolvers['notification'] = ({ id }) => {
-  return db.notification.findUnique({
-    where: { id },
-  })
+export const countNotifications: QueryResolvers['countNotifications'] = () => {
+  return db.notification.count();
 }
 
 export const Notification: NotificationRelationResolvers = {
