@@ -30,7 +30,7 @@ export function Sidebar() {
         <SidebarItem onClick={() => navigate(routes.home())}>
           <BiHome className="text-2xl" /> <span>Home</span>
         </SidebarItem>
-        <SidebarItem>
+        <SidebarItem onClick={() => navigate(routes.notifications())}>
          <NotificationsButton />
         </SidebarItem>
         <SidebarItem>

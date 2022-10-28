@@ -21,6 +21,10 @@ export const schema = gql`
     countNotifications: Int! @requireAuth
   }
 
+  type Mutation {
+    viewNotification(id: String!): Boolean @requireAuth
+  }
+
   input CreateNotificationInput {
     event: NotificationEvent!
     userId: String!

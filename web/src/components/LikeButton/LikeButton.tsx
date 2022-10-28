@@ -26,7 +26,6 @@ const LikeButton = ({ tweet }: { tweet: Tweet }) => {
         id: cache.identify(tweet),
         fields: {
           _count: (_count, { readField }) => {
-            console.log(_count)
             if (createLike.operation === 'DELETE') {
               return _count.likes -1
             } else {

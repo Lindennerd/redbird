@@ -25,11 +25,7 @@ export function Notification({
   notification: NotificationType
 }) {
 
-  const [viewNotification, {loading}] = useMutation(VIEW_NOTIFICATION_MUTATION, {
-    update: (data) => {
-
-    }
-  })
+  const [viewNotification, {loading}] = useMutation(VIEW_NOTIFICATION_MUTATION)
 
   function handleClickNotification() {
     navigate(routes.tweet({id: notification.tweet.id}))

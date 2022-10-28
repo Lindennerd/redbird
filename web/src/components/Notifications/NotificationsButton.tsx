@@ -13,14 +13,9 @@ export default function NotificationsButton() {
     pollInterval: 3600,
   })
 
-  useEffect(() => {
-    console.log(data?.countNotifications)
-    //setNotificationsCount(notifications.length)
-  }, [data])
-
   return (
     <>
-        <BiBell className="text-2xl" />
+      <BiBell className="text-2xl" />
       <div className='absolute mb-6 ml-2'>
         <div className="rounded-full px-2 bg-red-600 text-sm">
           {data?.countNotifications}

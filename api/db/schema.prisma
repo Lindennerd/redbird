@@ -83,13 +83,14 @@ model Tweet {
 }
 
 model Notification {
-  id      String            @id @default(cuid())
-  user    User              @relation(fields: [userId], references: [id])
-  tweet   Tweet             @relation(fields: [tweetId], references: [id])
-  event   NotificationEvent
-  userId  String
-  tweetId String
-  viewed  Boolean           @default(false)
+  id        String            @id @default(cuid())
+  user      User              @relation(fields: [userId], references: [id])
+  tweet     Tweet             @relation(fields: [tweetId], references: [id])
+  event     NotificationEvent
+  userId    String
+  tweetId   String
+  viewed    Boolean           @default(false)
+  createdAt DateTime          @default(now())
 }
 
 enum NotificationEvent {

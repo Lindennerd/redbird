@@ -7,7 +7,6 @@ import RetweetButton from '../RetweetButton/RetweetButton'
 import Modal from '../UI/Modal'
 import { Tweet as TweetType } from 'types/graphql'
 import { FaRetweet } from 'react-icons/fa'
-import { ProfileImage } from '../UI/ProfileImage'
 
 interface TweetProps {
   displayActions: boolean
