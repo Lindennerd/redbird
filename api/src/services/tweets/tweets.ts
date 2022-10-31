@@ -56,10 +56,16 @@ const tweetWithUserLikedField = (tweet) => ({
   })),
 })
 
-export const tweets: QueryResolvers['tweets'] = async () => {
+const TWEETS_PER_PAGE = 10;
+
+export const tweets: QueryResolvers['tweets'] = async ({page = 1}) => {
+  const offset = (page -1) * TWEETS_PER_PAGE;
+
   const tweets = context.currentUser
     ? await db.tweet.findMany({
         include: tweetsInclude,
+        take: TWEETS_PER_PAGE,
+        skip: offset,
         where: {
           AND: [
             { repliesToId: null },
@@ -79,6 +85,8 @@ export const tweets: QueryResolvers['tweets'] = async () => {
       })
     :  await db.tweet.findMany({
         include: tweetsInclude,
+        take: TWEETS_PER_PAGE,
+        skip: offset,
         where: {
           repliesToId: null,
         },
