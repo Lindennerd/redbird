@@ -58,40 +58,11 @@ const tweetWithUserLikedField = (tweet) => ({
 
 const TWEETS_PER_PAGE = 10;
 
-export const tweets: QueryResolvers['tweets'] = async ({page = 1}) => {
-  const offset = (page -1) * TWEETS_PER_PAGE;
+export const tweets: QueryResolvers['tweets'] = async ({cursor}) => {
 
   const tweets = context.currentUser
-    ? await db.tweet.findMany({
-        include: tweetsInclude,
-        take: TWEETS_PER_PAGE,
-        skip: offset,
-        where: {
-          AND: [
-            { repliesToId: null },
-            {
-              OR: [
-                {
-                  userId: context.currentUser.id
-                },
-                {
-                  user: { followers: { some: { userId: context.currentUser.id } } },
-                },
-              ]
-            }
-          ],
-        },
-        orderBy: { createdAt: 'desc' },
-      })
-    :  await db.tweet.findMany({
-        include: tweetsInclude,
-        take: TWEETS_PER_PAGE,
-        skip: offset,
-        where: {
-          repliesToId: null,
-        },
-        orderBy: { createdAt: 'desc' },
-      })
+    ? await getUsersFeed(cursor)
+    :  await getUnauthFeed(cursor)
 
   return tweets.map(tweetWithUserLikedField)
 }
@@ -202,3 +173,55 @@ export const Tweet: TweetRelationResolvers = {
     return db.tweet.findUnique({ where: { id: root?.id } }).retweet()
   },
 }
+async function getUnauthFeed(cursor?: string) {
+  const query = {
+    include: tweetsInclude,
+    take: TWEETS_PER_PAGE,
+    skip: cursor ? 1 : 0,
+    where: {
+      repliesToId: null,
+    },
+    orderBy: { createdAt: 'desc' },
+  }
+
+  if(cursor) {
+    query['cursor'] = {
+      id: cursor
+    }
+  }
+
+  return await db.tweet.findMany(query);
+}
+
+async function getUsersFeed(cursor?: string) {
+  const query = {
+    include: tweetsInclude,
+    take: TWEETS_PER_PAGE,
+    skip: cursor ? 1 : 0,
+    where: {
+      AND: [
+        { repliesToId: null },
+        {
+          OR: [
+            {
+              userId: context.currentUser.id
+            },
+            {
+              user: { followers: { some: { userId: context.currentUser.id } } },
+            },
+          ]
+        }
+      ],
+    },
+    orderBy: { createdAt: 'desc' },
+  };
+
+  if(cursor) {
+    query['cursor'] = {
+      id: cursor
+    }
+  }
+
+  return await db.tweet.findMany(query);
+}
+

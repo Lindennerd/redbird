@@ -21,7 +21,7 @@ export const schema = gql`
   }
 
   type Query {
-    tweets(page: Int): [Tweet!]! @skipAuth
+    tweets(cursor: String): [Tweet!]! @skipAuth
     tweet(id: String!): Tweet @skipAuth
   }
 

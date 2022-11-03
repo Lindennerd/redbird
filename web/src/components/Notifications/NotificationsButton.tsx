@@ -10,7 +10,7 @@ const QUERY = gql`
 
 export default function NotificationsButton() {
   const { data } = useQuery<{ countNotifications: number } | undefined>(QUERY, {
-    pollInterval: 3600,
+    //pollInterval: 3600,
   })
 
   return (
